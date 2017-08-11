@@ -184,7 +184,7 @@ function convertint($_string)
 	return (int)$_string;
 }
 ?>
-<form enctype="multipart/form-data" action="?action=import" method="POST">
+<form enctype="multipart/form-data" action="?action=import&format=csv" method="POST">
 	<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 	CSV - File: <input name="uploadedfile" type="file" /> <input type="submit" name="submit" value="Upload File" />
 </form>
@@ -219,7 +219,7 @@ if($_POST['importieren'])
 else
 {
 	echo "Bei welchem Benutzer sollten die Datem importiert werden:<br>";
-	echo '<form action="?action=import" method="POST">';
+	echo '<form action="?action=import&format=csv" method="POST">';
 	echo '<select name="name" size="1">';
 	$x = 1;
 	for($x = 1; $x < count($_users->_array); $x++)

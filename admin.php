@@ -274,9 +274,8 @@ switch($_action){
 		}			
 		break;
 	case "import":
-		$_infotext = getinfotext("CSV - Import (z.B.IPhone APP TimeOrg - timeorg.zimco.com)","td_background_top");		
-		$_template->_user02 = "sites_admin/admin02.php";
-		$_template->_user04 = "sites_admin/admin04_csv_import.php";
+	    $_template->_user02 = "sites_admin/admin02.php";
+	    $_template->_user04 = "sites_admin/admin04_choose_import.php";
 		break;
 	case "anwesend":
 		if($_grpwahl==0) $_grpwahl = 1;

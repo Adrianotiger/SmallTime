@@ -24,7 +24,8 @@ class time_user{
 	public $_Ferien_pro_Jahr		= NULL;		
 	public $_Stunden_uebertrag 	= NULL;
 	public $_Ferienguthaben_uebertrag 	= NULL;
-	public $_feiertage 			= array(0,0,0,0,0,0,0,0,0,0,0);
+	public $_feiertageUser 			= array(0,0,0,0,0,0,0,0,0,0,0);
+  public $_feiertageDefault   = array(0,0,0,0,0,0,0,0,0,0,0);
 	public $_absenzen			= array();
 	public $_zuschlag			= array();
 	public $_modell			= NULL;
@@ -34,6 +35,7 @@ class time_user{
 	}
 	function load_data_pfad($datenpfad){
 		$_userdaten = file("./Data/".$datenpfad."/userdaten.txt");
+    $_userferien = file("./include/Settings/feiertage2.txt");
 		$this->_loginname 	= $_SESSION['username'];
 		$this->_password 	= $_SESSION['passwort'];
 		$this->_ordnerpfad	= $_SESSION['datenpfad'];
@@ -53,7 +55,8 @@ class time_user{
 		$tmp = explode(';',$_userdaten[6]);
 		$this->_Stunden_uebertrag = $tmp[0];
 		$this->_Ferienguthaben_uebertrag = $tmp[1];
-		$this->_feiertage = explode(";", $_userdaten[8]);
+		$this->_feiertageUser = explode(";", $_userdaten[8]);
+    $this->_feiertageDefault = explode(";", $_userferien[0]);
 		$this->_zuschlag[0] = explode(";", $_userdaten[9]);	
 		$this->_zuschlag[1] = explode(";", $_userdaten[10]);
 		$this->_zuschlag[2] = explode(";", $_userdaten[11]);

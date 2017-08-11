@@ -16,6 +16,7 @@ class time_feiertage
 	public  	$_feiertage 	= array();			// Feiertage die gültig sind
 	private 	$_defineFT 	= array();			// definition der Feiertage
 	private 	$_file 		= "./include/Settings/feiertage.txt";
+  private   $_file2    = "./include/Settings/feiertage2.txt";
 	function __construct($_w_jahr, $_country, $_feiertageUSER)
 	{
 		$this->_w_jahr = $_w_jahr;
@@ -32,13 +33,18 @@ class time_feiertage
 	{
 		//Feiertage All werden mit den Einstellungen beim User verglichen, ob true oder false
 		$z = 0;
+    $_defaultfeiertage = explode(";", file($this->_file2)[0]);
 		foreach($this->_defineFT as $_bez => $_tag)
 		{
+      if($_defaultfeiertage[$z] == 1)
+        $holidays[$_bez] = $_tag;
+      /*
 			if(trim($this->_feiertageUSER[$z - 1]) == "1"){
 				$holidays[$_bez] = $_tag;
 			}elseif($z == 0){
 				$holidays[$_bez] = $_tag;
 			}
+      */
 			$z++; 
 		}
 		//Individuelle Feiertage laden
@@ -121,6 +127,19 @@ class time_feiertage
 		$open= fopen($this->_file,"w+");
 		fwrite ($open, $neu);
 		fclose($open);
+    
+    $_tmparr2 = array();
+    foreach($this->_defineFT as $_bez => $_tag)
+    {
+      if(isset($_POST['FT_flag_' . $_bez]))
+        array_push($_tmparr2, 1);
+      else
+        array_push($_tmparr2, 0);      
+    }
+    $neu = implode( ";", $_tmparr2);
+    $open= fopen($this->_file2,"w+");
+    fwrite ($open, $neu);
+    fclose($open);
 	}
 	function delete_feiertag($id)
 	{

@@ -218,7 +218,7 @@ class time_month{
 			$saldo = round($saldo,2);
 			$this->_MonatsArray[$i][20] = $saldo;
 			if($i>0){
-				$this->_MonatsArray[$i][21] = round($this->_MonatsArray[$i-1][21] + $this->_MonatsArray[$i][20],2);
+				$this->_MonatsArray[$i][21] = round(intval($this->_MonatsArray[$i-1][21]) + intval($this->_MonatsArray[$i][20],2));
 			}else{
 				$this->_MonatsArray[$i][21] = $this->_MonatsArray[$i][20];
 			}

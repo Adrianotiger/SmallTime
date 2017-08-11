@@ -200,10 +200,22 @@ class time{
 		$jahr = date("Y", $_timestamp);
 		$monat = date("n", $_timestamp);
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $jahr . "." . $monat;
+    
+    if(file_exists($_file))
+    {      
+      $alltimes = file($_file);
+      $timepos = array_search($_timestamp, $alltimes);
+      echo "Time pos: $timepos/" . count($alltimes) . "<br>";
+      if($timepos!==false && $timepos < count($alltimes))
+      {
+        return false;
+      }
+    }
 		$fp = fopen($_file,"a+");
 		fputs($fp, $_timestamp);
 		fputs($fp, $_zeilenvorschub);
-		fclose($fp);		        
+		fclose($fp);
+    return true;		        
 	}
 	function checktime($_stunde,$_minute,$_monat,$_tag,$_jahr){
 		if($_stunde == '24' && $_minute == '00'){

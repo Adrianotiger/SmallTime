@@ -5,6 +5,7 @@
                 <meta name="Content-language" content="<?php echo $_settings->_array[3][1] ?>">
                 <meta http-equiv="Content-Type" content="<?php echo $_settings->_array[4][1] ?>">
                 <meta http-equiv="Content-Script-Type" content="<?php echo $_settings->_array[5][1] ?>">
+                <meta http-equiv="X-UA-Compatible" content="IE=Edge">
                 <meta name="page-type" content="<?php echo $_settings->_array[6][1] ?>">
                 <meta name="page-topic" content="<?php echo $_settings->_array[7][1] ?>">
                 <meta name="description" content="<?php echo $_settings->_array[8][1] ?>">

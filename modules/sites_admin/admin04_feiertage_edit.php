@@ -48,6 +48,31 @@ echo '<input type="text" name="v'.$i.'" value=""> <img src="images/icons/informa
 echo '</td>';
 echo '</tr>';
 
+echo '</tr>';
+$i = 0;
+$activeFeierTage = $_feiertage->getFeiertage(date("Y",time()), 1);
+$arr = $_feiertage->getFeiertageALL(date("Y",time()), 1);
+asort($arr);
+foreach($arr as $_eintrag => $key)
+{
+  echo '<tr>';
+  echo '<td class="td_background_tag"widht=20>';
+  //echo '<a title="delete" href="?action=feiertage&del='.$i.'"><img src="images/icons/delete.png" border=0> delete</a>';
+  $checked = '';
+  if(in_array($key, $activeFeierTage)) $checked = 'checked';
+  echo "<input type='checkbox' name='FT_flag_$_eintrag' $checked />";
+  echo '</td>';
+  echo '<td class="td_background_tag">';
+  echo '' . $_eintrag . '';
+  echo '</td>';
+  echo '<td class="td_background_tag">';
+  echo date("d.m(.Y)", $key);
+  echo '</td>';
+  echo '</tr>';
+  $i++;
+}
+echo '<tr>';
+
 echo '<tr>';
 echo '<td class="td_background_top" align=center colspan=3>';
 echo '<input type="hidden" name="anzahl" value="'.$i.'" titel="anzahl">';

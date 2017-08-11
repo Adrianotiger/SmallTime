@@ -92,6 +92,7 @@ echo "</td>";
 echo "<td align=left class=td_background_tag width='16' valign='top'><img title='Arbeitstage eintragen,
 ob ein ganzer oder halber Tag gearbeitet wird. Eingabe mit Punkt und in Dezimal. (z.B. 0.5 und 1 und 0)' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
+/*
 echo "<tr>";
 echo "<td COLSPAN=3 class=td_background_top width=60>Feiertage</td>";
 echo "</tr>";
@@ -128,6 +129,7 @@ echo "</table>";
 echo "</td>";
 echo "<td align=left class=td_background_tag width='16' valign='top'><img title='Aktivieren oder deaktivieren Sie die Feiertage, je nach dem, welche g&uuml;ltig sind.' src='images/icons/information.png' border=0></td>";
 echo "</tr>";
+ */
 echo "<tr>";
 echo "<td COLSPAN=3 class=td_background_top width=60>Zeitzuschlag</td>";
 echo "</tr>";
