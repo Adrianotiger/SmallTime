@@ -8,7 +8,7 @@
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 ?>
-<form name='login' action='?action=zip_user&admin_id=<?php echo $_SESSION['id']; ?>' method='post' target='_self'>
+<form name='login' action='?action=zip_user&admin_id=<?php echo $_SESSION['id']; ?>' method='post'>
         <input type='submit' name='make' value='Neue Sicherung erstellen' >
 </form>
 <?php
@@ -218,7 +218,7 @@ for($i = 0;$i < $anz;$i++)
                 // alte Variante, ohne Sicherheit
                 //echo "<div id='pdf'><a href='./Data/_zip/".$_user->_ordnerpfad."/$afile[$i]' target='_new'><img id='zip' src='images/ico/zip.png' border=0 width=86><br><font size=-4>$afile[$i]</font></a>";
                 // neu über Downlado.php
-                 echo "<div id='pdf'><a href='download.php?datei=".$afile[$i]."&typ=zip&pfad=".$_user->_ordnerpfad."'' target='_new'><img id='zip' src='images/ico/zip.png' border=0 width=86><br><font size=-4>$afile[$i]</font></a>";
+                 echo "<div id='pdf'><a href='download.php?datei=".$afile[$i]."&typ=zip&pfad=".$_user->_ordnerpfad."''><img id='zip' src='images/ico/zip.png' border=0 width=86><br><font size=-4>$afile[$i]</font></a>";
                 
                 echo "</div>";
         }

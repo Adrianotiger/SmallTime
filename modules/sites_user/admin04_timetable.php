@@ -17,6 +17,7 @@ $a = 1;
 if($_settings->_array[17][1]||$_settings->_array[26][1]) $a++;
 if(!$_settings->_array[18][1||$_settings->_array[26][1]]) $a++;
 $modal = "";
+$zeitformat = ($_settings->_array[29][1] == 1);
 if(strstr($_template->_modal,'true')) $modal = "&modal";
 ?>
 <table width=100% border=0 cellpadding=3 cellspacing=1>
@@ -83,7 +84,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                 //-------------------------------------------------------------------------
                 echo " <td ". $_monat->_MonatsArray[$z][30]." align=center>";
                 if($_monat->_MonatsArray[$z][13]>0){
-                        echo number_format($_monat->_MonatsArray[$z][13], 2, '.', '');
+                        echo dec2timeSett($_monat->_MonatsArray[$z][13], $zeitformat);
                 }
                 echo "</td>\n";
                 //-------------------------------------------------------------------------
@@ -91,9 +92,9 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                 //-------------------------------------------------------------------------
                 echo " <td ". $_monat->_MonatsArray[$z][30]." align=center>";
                 if($_monat->_MonatsArray[$z][20]>0){
-                        echo number_format($_monat->_MonatsArray[$z][20], 2, '.', '');
+                        echo dec2timeSett($_monat->_MonatsArray[$z][20], $zeitformat);
                 }elseif($_monat->_MonatsArray[$z][20]<0){
-                        echo "<font class=minus>". number_format($_monat->_MonatsArray[$z][20], 2, '.', ''). "</font>";
+                        echo "<font class=minus>". dec2timeSett($_monat->_MonatsArray[$z][20], $zeitformat). "</font>";
                 }
                 echo "</td>\n";
                 //-------------------------------------------------------------------------
@@ -132,13 +133,16 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                 <td COLSPAN=3 class=td_background_top width=70 align=center></td>
                 <td COLSPAN=<?php echo $t; ?> class=td_background_top width=550 align = left>Sollstunden :
                         <?php
-                        echo $_monat->_SummeSollProMonat; ?> Std.</td>
+                        echo ($_monat->_SummeWorkProMonat - $_monat->_SummeSaldoProMonat);
+                        echo " Std.";
+                        echo " (Total: " . $_monat->_SummeSollProMonat . " Std.)";
+                        ?></td>
                 <td class=td_background_top width=40 align=center><?php if($_monat->_SummeWorkProMonat>0) echo $_monat->_SummeWorkProMonat ?></td>
                 <td class=td_background_top width=40 align=center><?php
                         if($_monat->_SummeSaldoProMonat>0){
-                                echo number_format($_monat->_SummeSaldoProMonat, 2, '.', '');
+                                echo dec2timeSett($_monat->_SummeSaldoProMonat, $zeitformat);
                         }elseif($_monat->_SummeSaldoProMonat<0){
-                                echo "<font class=minus>". number_format($_monat->_SummeSaldoProMonat, 2, '.', ''). "</font>";
+                                echo "<font class=minus>". dec2timeSett($_monat->_SummeSaldoProMonat, $zeitformat). "</font>";
                         }
                         ?>
                 </td>
@@ -149,7 +153,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
         </tr>
 </table>
 <?php
-//TODO : Template ohne Bootstrap -> lÃ¶schen
+//TODO : Template ohne Bootstrap -> löschen
 if(strstr($_template->_modal,'true')){ ?>
         <script type="text/javascript">
                 $('#div_user04 a').click(function(e){

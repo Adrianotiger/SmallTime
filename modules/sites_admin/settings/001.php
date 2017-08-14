@@ -177,6 +177,25 @@ $_anzeige = $_anzeige . '
 		</td>';
 $_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[28][2]."' src='images/icons/information.png' border=0></td></tr>";
 
+//------------------------------------------------------------------------------------
+// Zeitformat (Zeile 30)
+//------------------------------------------------------------------------------------
+$_anzeige = $_anzeige . "<tr><td colspan='3' class=td_background_top>Zeitformat bei Rapporte</td></tr>";
+$_anzeige = $_anzeige . "<tr width=50%>";
+$_anzeige = $_anzeige . "<td class=td_background_tag align=left align=left>". $_settings->_array[29][0] . "</td>";
+if($_settings->_array[29][1]==0){ $check1=" checked ";}else{$check1="";}
+if($_settings->_array[29][1]==1){ $check2=" checked ";}else{$check2="";}
+$_anzeige = $_anzeige . '
+    <td class=td_background_tag align=left>
+      <table border="0" cellspacing="0" cellpadding="0" ><tr>
+        <td><input type="radio" value="0" name="29" '. $check1 .'></td>
+        <td>Zahl, z.B: 13.80 (Standard)</td>
+        <td><input type="radio" value="1" name="29" '. $check2 .'></td>
+        <td>Zeit, z.B: 13:56 </td>
+      </tr></table>
+    </td>';
+$_anzeige = $_anzeige .  "<td class=td_background_tag align=left><img title='".$_settings->_array[29][2]."' src='images/icons/information.png' border=0></td></tr>";
+
 
 $y--;
 $_anzeige = $_anzeige . "	

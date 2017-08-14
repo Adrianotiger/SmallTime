@@ -17,6 +17,9 @@ function erstelle_neu($_drucktime)
 	global $_settings;
 	global $_absenz;
 	global $_month;
+  
+  $zeitformat = ($_settings->_array[29][1] == 1);
+  
 	//Daten für die Anzeige
 	$_sum = array();
 
@@ -133,7 +136,7 @@ function erstelle_neu($_drucktime)
 	$pdf->Cell(11,6,'',0,'','L');
 	$pdf->Cell(30,6,'Monatsanfang :',0,0,'L', '1');
 	$pdf->Cell(30,6,'Zeit Saldo : ',0,0,'L', '1');
-	$pdf->Cell(30,6,$_sum['zeit']['monat_start'].' Std.',0,0,'L', '1');
+	$pdf->Cell(30,6,dec2timeSett($_sum['zeit']['monat_start'],$zeitformat).' Std.',0,0,'L', '1');
 	$pdf->Cell(30,6,'Feriensaldo : ',0,0,'L', '1');
 	$pdf->Cell(30,6,$_sum['ferien']['monat_start'] .$_ftxtA,0,0,'L', '1');
 	$pdf->Cell(28,6,'',0,0,'L', '1');
@@ -144,7 +147,7 @@ function erstelle_neu($_drucktime)
 		$txt = iconv("UTF-8","ISO-8859-1",'Übertrag');
 		$pdf->Cell(30,6,$txt .' : ',0,0,'L');
 		$pdf->Cell(30,6,'',0,0,'L');
-		$pdf->Cell(30,6,$_sum['zeit']['uebertrag']  ." Std.",0,0,'L');
+		$pdf->Cell(30,6,dec2timeSett($_sum['zeit']['uebertrag'],$zeitformat) ." Std.",0,0,'L');
 		$pdf->Cell(30,6,'',0,0,'L');
 		$pdf->Cell(30,6,$_sum['ferien']['uebertrag'] . ' Tage',0,0,'L');
 		$pdf->Cell(28,6,'',0,0,'L');
@@ -155,7 +158,7 @@ function erstelle_neu($_drucktime)
 	$txt = iconv("UTF-8","ISO-8859-1",'Veränderung');
 	$pdf->Cell(30,6,$txt .' : ',0,0,'L');
 	$pdf->Cell(30,6,'',0,0,'L');
-	$pdf->Cell(30,6,$_sum['zeit']['summe'] ." Std.",0,0,'L');
+	$pdf->Cell(30,6,dec2timeSett($_sum['zeit']['summe'],$zeitformat) ." Std.",0,0,'L');
 	$pdf->Cell(30,6,'',0,0,'L');
 	$pdf->Cell(30,6,'- '.$_sum['ferien']['bezug'].$_ftxt,0,0,'L');
 	$pdf->Cell(28,6,'',0,0,'L');
@@ -165,7 +168,7 @@ function erstelle_neu($_drucktime)
 		$pdf->Cell(11,6,'',0,'','L');
 		$pdf->Cell(30,6,'Auszahlung : ',0,0,'L');
 		$pdf->Cell(30,6,'',0,0,'L');
-		$pdf->Cell(30,6,$_sum['zeit']['auszahlung'] ." Std.",0,0,'L');
+		$pdf->Cell(30,6,dec2timeSett($_sum['zeit']['auszahlung'],$zeitformat) ." Std.",0,0,'L');
 		$pdf->Cell(30,6,'',0,0,'L');
 		$pdf->Cell(30,6,'',0,0,'L');
 		$pdf->Cell(28,6,'',0,0,'L');
@@ -176,7 +179,7 @@ function erstelle_neu($_drucktime)
 		$pdf->Cell(11,6,'',0,'','L');
 		$pdf->Cell(30,6,'Vorholzeit : ',0,0,'L');
 		$pdf->Cell(30,6,'',0,0,'L');
-		$pdf->Cell(30,6,$_sum['zeit']['vorholzeit']  ." Std.",0,0,'L');
+		$pdf->Cell(30,6,dec2timeSett($_sum['zeit']['vorholzeit'],$zeitformat) ." Std.",0,0,'L');
 		$pdf->Cell(30,6,'',0,0,'L');
 		$pdf->Cell(30,6,'',0,0,'L');
 		$pdf->Cell(28,6,'',0,0,'L');
@@ -187,7 +190,7 @@ function erstelle_neu($_drucktime)
 	$pdf->Cell(11,6,'',0,'','L');
 	$pdf->Cell(30,6,'Monatsende :',0,0,'L', '1');
 	$pdf->Cell(30,6,'',0,0,'L', '1');
-	$pdf->Cell(30,6,$_sum['zeit']['monat_ende']." Std.",0,0,'L', '1');
+	$pdf->Cell(30,6,dec2timeSett($_sum['zeit']['monat_ende'],$zeitformat)." Std.",0,0,'L', '1');
 	$pdf->Cell(30,6,'',0,0,'L', '1');
 	$pdf->Cell(30,6,$_sum['ferien']['monat_ende']. $_ftxtE,0,0,'L', '1');
 	$pdf->Cell(28,6,'',0,0,'L', '1');
@@ -246,9 +249,15 @@ function erstelle_neu($_drucktime)
 			}
 			$pdf->Cell(72,5,$tmp,1,'','L','1'); 	// Stempelzeiten in einer Schleife....
 			if($zeile[13] == 0)$zeile[13] = "";
-			$pdf->Cell(13,5,$zeile[13],1,'','C','1');
+      if(is_numeric($zeile[13]))
+        $pdf->Cell(13,5,dec2timeSett($zeile[13],$zeitformat),1,'','C','1');
+      else
+			  $pdf->Cell(13,5,$zeile[13],1,'','C','1');
 			if($zeile[20] == 0 && $zeile[13] == 0)$zeile[20] = "";
-			$pdf->Cell(13,5,$zeile[20],1,'','C','1');
+      if(is_numeric($zeile[20]))
+			  $pdf->Cell(13,5,dec2timeSett($zeile[20],$zeitformat),1,'','C','1');
+      else
+        $pdf->Cell(13,5,$zeile[20],1,'','C','1');
 			$pdf->Cell(14,5,$zeile[14],1,'','L','1');
 			$_txt = iconv("UTF-8", "ISO-8859-1", $zeile[34]);
 			$zeile[6] = iconv("UTF-8", "ISO-8859-1", $zeile[6]);
@@ -266,7 +275,7 @@ function erstelle_neu($_drucktime)
 	$pdf->SetFillColor(200, 200, 200);
 	$pdf->Cell(11,5,'',0,'','C');
 	$pdf->Cell(18,5,"",1,'','C', '1');
-	$pdf->Cell(72,5,"Sollstunden :" .$_monat->_SummeSollProMonat . " Std.",1,'','L', '1');
+	$pdf->Cell(72,5,"Sollstunden :" . dec2timeSett($_monat->_SummeSollProMonat, $zeitformat) . " Std.",1,'','L', '1');
 	$pdf->Cell(13,5,$_monat->_SummeWorkProMonat,1,'','C', '1');
 	$pdf->Cell(13,5,$_monat->_SummeSaldoProMonat,1,'','C', '1');
 	$pdf->Cell(14,5,$_monat->_SummeAbsenzProMonat,1,'','C', '1');

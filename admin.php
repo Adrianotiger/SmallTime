@@ -34,7 +34,7 @@ error_reporting(E_ALL ^ E_NOTICE);
 //error_reporting(E_ALL);
 ini_set("display_errors", 1); 
 // Zeitzone setzten, damit die Stunden richtig ausgerechnet werden
-date_default_timezone_set("Europe/Paris");
+date_default_timezone_set("Europe/Berlin");
 @setlocale(LC_TIME, 'de_DE.UTF-8', 'de_DE@euro', 'de_DE', 'de-DE', 'de', 'ge', 'de_DE.UTF-8', 'German');  
 //Memory - ab ca. 15 Usern auf 32 stellen, ab 30 auf 64 und ab 60 auf 128M usw.
 @ini_set('memory_limit', '32M');
@@ -274,8 +274,8 @@ switch($_action){
 		}			
 		break;
 	case "import":
-	    $_template->_user02 = "sites_admin/admin02.php";
-	    $_template->_user04 = "sites_admin/admin04_choose_import.php";
+    $_template->_user02 = "sites_admin/admin02.php";
+    $_template->_user04 = "sites_admin/admin04_choose_import.php";
 		break;
 	case "anwesend":
 		if($_grpwahl==0) $_grpwahl = 1;

@@ -9,6 +9,7 @@
 *******************************************************************************/
 $stempelzeiten = 6;
 $xls ='';
+$zeitformat = ($_settings->_array[29][1] == 1);
 $xls .='
 <table>
 	<tr>
@@ -66,7 +67,7 @@ $xls .='
 		//-------------------------------------------------------------------------
 		$xls .= "		<td bgcolor=".$farbe.">";
 		if($_monat->_MonatsArray[$z][13]>0){
-			$xls .= number_format($_monat->_MonatsArray[$z][13], 2, '.', '');
+			$xls .= dec2timeSett($_monat->_MonatsArray[$z][13], $zeitformat);
 		}
 		$xls .= "</td>\n";
 		//-------------------------------------------------------------------------
@@ -74,7 +75,7 @@ $xls .='
 		//-------------------------------------------------------------------------
 		$xls .= " 		<td bgcolor=".$farbe.">";
 		if(number_format($_monat->_MonatsArray[$z][20], 2, '.', '')<>0){
-			$xls .= number_format($_monat->_MonatsArray[$z][20], 2, '.', '');
+			$xls .= dec2timeSett($_monat->_MonatsArray[$z][20], $zeitformat);
 		}
 		$xls .= "</td>\n";
 		//-------------------------------------------------------------------------
@@ -103,9 +104,9 @@ $xls .='
 	$xls .= '
 	<tr>
 		<td bgcolor="d1d1d1" COLSPAN=2></td>
-		<td bgcolor="d1d1d1" COLSPAN='.$stempelzeiten.'>Sollstunden :'.  $_monat->_SummeSollProMonat .' Std.</td>
+		<td bgcolor="d1d1d1" COLSPAN='.$stempelzeiten.'>Sollstunden :'.  $_monat->_SummeSollProMonat .' Std. (' . ($_monat->_SummeWorkProMonat - $_monat->_SummeSaldoProMonat) . ')</td>
 		<td bgcolor="d1d1d1">'. $_sum .'</td>
-		<td bgcolor="d1d1d1">	'.number_format($_monat->_SummeSaldoProMonat, 2, '.', '') .'</td>
+		<td bgcolor="d1d1d1">	'.dec2timeSett($_monat->_SummeSaldoProMonat, $zeitformat) .'</td>
 		<td bgcolor="d1d1d1">	'.$_monat->_SummeAbsenzProMonat.'</td>
 		<td>	</td>
 	</tr>

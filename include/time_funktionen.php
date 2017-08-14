@@ -142,8 +142,15 @@ function dec2time($number, $format = "%h:%i"){
 	$i = ($number - $h) * 60;
 	$i = number_format($i, 0, '.', '');
 	$format = preg_replace("/%h/", $h, $format);
-	$format = preg_replace("/%i/", $i, $format);
+	$format = preg_replace("/%i/", $i<10?'0'.$i:$i, $format);
 	return $format;
+}
+function dec2timeSett($number, $timeformat)
+{
+  if(!$timeformat)
+    return number_format($number, 2, '.', '');
+  else
+    return dec2time($number);
 }
 // ----------------------------------------------------------------------------
 // Funktionen für Debug

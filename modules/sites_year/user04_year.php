@@ -78,7 +78,7 @@ for($year = $_now; $year >= $_to; $year--){
 		$anzeige[$year]['Soll'][$month] 		= $_jahr->_data[$year][$month][3];	// Sollstunden
 		//Summen eintragen
 		$anzeige[$year]['Saldo'][12] 		+= $_jahr->_data[$year][$month][0];
-		$anzeige[$year]['Ferien'][12] 		+= $_jahr->_data[$year][$month][1];
+		$anzeige[$year]['Ferien'][12]   += intval($_jahr->_data[$year][$month][1]);
 		$anzeige[$year]['Work'][12] 		+= $_jahr->_data[$year][$month][2];
 		$anzeige[$year]['Soll'][12] 		+= $_jahr->_data[$year][$month][3];
 		//Monatsname und Link
@@ -116,7 +116,7 @@ for($year = $_to; $year <= $_now; $year++){
 	for($month = 0; $month < 12;$month++){
 		//Summen
 		$anzeige[$year]['Summ']['Saldo'] += $anzeige[$year]['Saldo'][$month] ;
-		$anzeige[$year]['Summ']['Ferien'] += $anzeige[$year]['Ferien'][$month] ;
+		$anzeige[$year]['Summ']['Ferien'] += intval($anzeige[$year]['Ferien'][$month]);
 		$anzeige[$year]['Summ']['Work'] += $anzeige[$year]['Work'][$month] ;
 		$anzeige[$year]['Summ']['Soll'] += $anzeige[$year]['Soll'][$month] ;
 		//Auszahlung

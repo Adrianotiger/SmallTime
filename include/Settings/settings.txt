@@ -27,3 +27,4 @@ Landeseinstellung (Bundes - Feiertag)#1#Landeseinstellung f&uuml;r den Bundes - 
 <img src='images/icons/group_key.png' border='0'> Admin Komplett#1#Admin kann alles editieren (Stempelzeit, Zeiten hinzuf&uuml;gen, Abwesenheit, Rapport) auch wenn deaktiviert
 <img src='images/icons/group_key.png' border='0'> Absenz Berechnung#1#nur bis zum heutigen Tag Absenzen berechnen
 <img src='images/icons/group_key.png' border='0'> Absenz Berechnung#1#Arbeitszeit wird von der Absenz abgezogen. Mit dieser Einstellung könnten Ferien in Überzeit umgewandelt werden. Bitte beachten Sie die gesetzlichen Richtlinien!
+<img src='images/icons/clock.png' border='0'> Zeit Darstellung#1#Ob die Zeit im Rapport als Zahl oder Zeit-Format dargestellt werden soll

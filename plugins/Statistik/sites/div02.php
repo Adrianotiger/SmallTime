@@ -168,7 +168,7 @@ for($z = 1; $z < count($_users->_array ) ; $z++)
 	{
 		for($b = 0; $b <= $anz; $b++)
 		{
-			$_data[$uz][13][$b] += $_data[$uz][$a][$b];
+			$_data[$uz][13][$b] = intval($_data[$uz][13][$b]) + intval($_data[$uz][$a][$b]);
 		}
 	}
 	$uz++;
