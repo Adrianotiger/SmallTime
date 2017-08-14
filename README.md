@@ -10,7 +10,7 @@ Infos zu Installation und Bedienung: [http://www.small.li/](http://www.small.li/
 ## Anpassungen 
 
 - Ferien werden normalerweise pro Firma und nicht pro Benutzer definiert (Beispiel: Thurgauer Mitarbeiter muss die Sankt-Galler Feiertage feiern, falls die Firma in SG ist).
-- Header mit '<meta http-equiv="X-UA-Compatible" content="IE=Edge">' erweitert, damit es mit XAMPP und eine .NET Applikation geöffnet werden kann
+- Header mit [meta http-equiv="X-UA-Compatible" content="IE=Edge"] erweitert, damit es mit XAMPP und eine .NET Applikation geöffnet werden kann
 - TODO: PHP7 gibt sehr viele Warnings, diese sollten behoben werden.
 - TODO: XML Anstatt TXT Dateien für Einstellungen
 
