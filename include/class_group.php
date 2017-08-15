@@ -16,7 +16,7 @@ class time_group
 		if($_grpwahl >= 0)
 		{
 			$_groups = new time_filehandle("./Data/","group.txt",";" );
-			$_users  = new time_filehandle("./Data/","users.txt",";" );
+			$_users  = new xml_filehandle("./Data/","users.xml" );
 			for($x = 1; $x < count($_groups->_array); $x++)
 			{
 				$tmpgrp = explode(",",$_groups->_array[$x][2]);
@@ -24,22 +24,22 @@ class time_group
 				foreach($tmpgrp as $ma)
 				{
 					// Gruppenbezeichnung
-					$this->_array[0][$x][] = $_groups->_array[$x][1];
+					$this->_array[0][$x][] = $_groups->_array[$x]['name'];
 					// Mitarbeiter ID
 					$this->_array[1][$x][] = $ma;
 					// Mitarbeiter Ordnerpfad
-					$this->_array[2][$x][] = $_users->_array[$ma][0];
+					$this->_array[2][$x][] = $_users->_array[$ma]['pfad'];
 					// Mitarbeiter Kurzzeichen
-					$this->_array[3][$x][] = $_users->_array[$ma][1];
+					$this->_array[3][$x][] = $_users->_array[$ma]['name'];
 					// Mitarbeiter Name
-					$this->_array[4][$x][] = $this->get_userdata($_users->_array[$ma][0]);
+					$this->_array[4][$x][] = $this->get_userdata($_users->_array[$ma]['pfad']);
 					// Mitarbeiter Stempelzeiten
-					$this->_array[5][$x][] = $this->get_timestamps($_users->_array[$ma][0]);
+					$this->_array[5][$x][] = $this->get_timestamps($_users->_array[$ma]['pfad']);
 					$u = 0;
 					// Anzahl Stempelzeiten
 					$this->_array[6][$x][$y] = count($this->_array[5][$x][$y]);
 					// Passwort
-					$this->_array[7][$x][$y] = $_users->_array[$ma][2];
+					$this->_array[7][$x][$y] = $_users->_array[$ma]['passwort'];
 					$y++;
 				}
 			}

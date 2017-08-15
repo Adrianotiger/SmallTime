@@ -38,7 +38,7 @@ class pdfgenerate{
 	function get_pdf(){
 		$arr = array();
 		$i=0;
-		unset($this->_users->_array[0]);
+		unset($this->_users->_array['pfad']);
 		foreach($this->_users->_array as $user){
 			//Dokumenten - Pfad und Loginname
 			$arr[$i]['pfad'] 	= './Data/' . $user['0'] . '/';

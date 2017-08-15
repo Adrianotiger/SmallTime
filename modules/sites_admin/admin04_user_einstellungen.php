@@ -16,13 +16,13 @@
 		<!-- Nach dem erstellen eines Users sollte der Ordnerpfad nicht mehr verändert werden
 		<tr>
 			<td align=left class=td_background_tag width=300>Pfad (Ordnername ./Data/XXXXX)</td>
-			<td align=left class=td_background_tag><input type='text' name='_a' value='<?php echo $_users->_array[$_id][0] ?>' size='70'></td>
+			<td align=left class=td_background_tag><input type='text' name='_a' value='<?php echo $_users->_array[$_id]['pfad'] ?>' size='70'></td>
 			<td align=left class=td_background_tag width=16><img title='Pfad zu den Daten f&uuml;r diesen Benutzer. Ohne Sonderzeichen, leerschl&auml;ge oder Umlaute!' src='images/icons/information.png' border=0></td>
 		</tr> !-->
-		<input type='hidden' name='_a' value='<?php echo $_users->_array[$_id][0] ?>' size='70'>
+		<input type='hidden' name='_a' value='<?php echo $_users->_array[$_id]['pfad'] ?>' size='70'>
 		<tr>
 			<td align=left class=td_background_tag>Loginname (empfehlung: Kurzzeichen)</td>
-			<td align=left class=td_background_tag><input type='text' name='_b' value='<?php echo $_users->_array[$_id][1] ?>' size='70'></td>
+			<td align=left class=td_background_tag><input type='text' name='_b' value='<?php echo $_users->_array[$_id]['name'] ?>' size='70'></td>
 			<td align=left class=td_background_tag width=16><img title='Loginnname, ohne Sonderzeichen, leerschl&auml;ge oder Umlaute!' src='images/icons/information.png' border=0></td>
 		</tr>
 		<tr>
@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td align=left class=td_background_tag>RFID - Chipnummer  (idtime.php?rfid=XXXXX)</td>
-			<td align=left class=td_background_tag><input type='text' name='_d' value='<?php echo $_users->_array[$_id][3] ?>' size='70'></td>
+			<td align=left class=td_background_tag><input type='text' name='_d' value='<?php echo $_users->_array[$_id]['rfid'] ?>' size='70'></td>
 			<td align=left class=td_background_tag width=16><img title='RFID - Nummer.' src='images/icons/information.png' border=0></td>
 		</tr>
 		<tr>

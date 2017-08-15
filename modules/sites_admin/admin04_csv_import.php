@@ -197,7 +197,7 @@ if($_POST['importieren'])
 	echo "Mitarbeiter : ".$_POST['name']. "<br>";
 	$x    = $_POST['name'];
 	$user = $_users->_array[$x];
-	echo "Mitarbeiter : $user[1] / Pfad : $user[0] / Passwort : $user[2]<br>";
+	echo "Mitarbeiter : {$user['name']} / Pfad : {$user['pfad']} / Passwort : {$user['passwort']} / rfid : {$user['rfid']}<br>";
 	foreach($_timelist as $time)
 	{
 		$_time->save_timestamp($time,$user[0]);
@@ -224,7 +224,7 @@ else
 	$x = 1;
 	for($x = 1; $x < count($_users->_array); $x++)
 	{
-		echo '<option value="'.$x.'">'.$_users->_array[$x][1]. '</option>';
+		echo '<option value="'.$x.'">'.$_users->_array[$x]['name']. '</option>';
 	}
 	echo '</select>';
 	echo '';

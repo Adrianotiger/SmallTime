@@ -12,12 +12,13 @@ class time_login{
 	public $_datenpfad	= "";
 	public $_username 	= "";
 	public $_passwort	= "";
+  public $_rfid = "";
 	public $_login 		= false;
 	public $_admins	= false; 	//nur Admins einloggen, dann true setzten nach erstellen einer Instanz
 	
 	function __construct(){	
 	}
-	function login($POST,$userlist){
+	function login($POST, $userlist){
 		if($this->_admins){
 			$this->_username 	= trim($_POST['_n']);
 			$this->_passwort 	= sha1(trim($_POST['_p']));	
@@ -80,13 +81,16 @@ class time_login{
 			$_berechtigt 	= $_admins[2];
 			$_berechtigt 	= explode(",", $_berechtigt);	
 			foreach($_berechtigt as $u){
-				$_name = trim($userlist[trim($u)][1]);
-				$_passwort = trim($userlist[trim($u)][2]);
+			  $user = $userlist[trim($u)];
+        
+				$_name = trim($userlist[trim($u)]['name']);
+				$_passwort = trim($userlist[trim($u)]['passwort']);
 				if($_name == $this->_username && $_passwort == $this->_passwort){
 					$this->_id 		= trim($u);
-					$this->_datenpfad 	= $userlist[trim($u)][0];
-					$this->_username 	= $userlist[trim($u)][1];
-					$this->_passwort 	= $userlist[trim($u)][2];
+					$this->_datenpfad 	= $userlist[trim($u)]['pfad'];
+					$this->_username 	= $userlist[trim($u)]['name'];
+					$this->_passwort 	= $userlist[trim($u)]['passwort'];
+					$this->_rfid   = $userlist[trim($u)]['rfid'];
 					$this->_login		= true;
 					$this->setSession(trim($u));
 					$this->setcookie();	
@@ -97,9 +101,10 @@ class time_login{
 			foreach($userlist as $zeile){	
 				if(strstr($this->_username,trim($zeile[1])) and strstr($this->_passwort,trim($zeile[2]))){
 					$this->_id 		= $u;
-					$this->_datenpfad 	= $zeile[0];
-					$this->_username 	= $zeile[1];
-					$this->_passwort 	= $zeile[2];
+					$this->_datenpfad 	= $zeile['pfad'];
+					$this->_username 	= $zeile['name'];
+					$this->_passwort 	= $zeile['passwort'];
+          $this->_rfid  = $zeile['rfid'];
 					$this->_login		= true;
 					$this->setSession($u);
 					$this->setcookie();		
@@ -119,8 +124,9 @@ class time_login{
 		$_SESSION['datenpfad'] 	= $this->_datenpfad;
 		$_SESSION['username'] 	= $this->_username;
 		$_SESSION['passwort'] 	= $this->_passwort;
-		$_SESSION['login'] 		= $this->_login;
-		$_SESSION['showpdf'] 	= 0;
+    $_SESSION['rfid']       = $this->_rfid;
+		$_SESSION['login'] 		  = $this->_login;
+		$_SESSION['showpdf'] 	  = 0;
 	}
 	private function setcookie(){
 		setcookie("lname",$this->_username,time()+2952000);
@@ -136,8 +142,8 @@ class time_login{
 			$_berechtigt 	= $_admins[2];
 			$_berechtigt 	= explode(",", $_berechtigt);	
 			foreach($_berechtigt as $u){
-				$_name 		= trim($userlist[trim($u)][0]);
-				$_passwort 	= trim($userlist[trim($u)][2]);
+				$_name 		= trim($userlist[trim($u)]['pfad']);
+				$_passwort 	= trim($userlist[trim($u)]['passwort']);
 				if($_name == $_SESSION['admin']){
 					$_secure = true;
 				}
@@ -147,10 +153,11 @@ class time_login{
 	}
 	function logout(){
 		$_SESSION['admin']		="";
-		$_SESSION['id']			="";
-		$_SESSION['datenpfad']	="";
+		$_SESSION['id']			  ="";
+		$_SESSION['datenpfad']="";
 		$_SESSION['username']	="";
 		$_SESSION['passwort']	="";
+    $_SESSION['rfid']     ="";
 		$_SESSION['login']		="";
 		$_SESSION = array();
 		//session_destroy();

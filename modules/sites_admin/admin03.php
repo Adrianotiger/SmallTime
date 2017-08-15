@@ -7,16 +7,15 @@
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
+include_once "./include/class_xmlhandle.php";
+
 echo "<table width=100% border=0 cellpadding=5 cellspacing=1>";
-$_file = "./Data/users.txt";
-$_benutzer = file($_file);
-unset($_benutzer[0]);
+$_benutzer = new xml_filehandle("./Data/", "users.xml");
 $i=1;
-foreach($_benutzer as $string){
-	$string = explode(";", $string);
-	$_userdaten_tmp = file("./Data/".$string[0]."/userdaten.txt");
+foreach($_benutzer->_array as $udata){
+	$_userdaten_tmp = file("./Data/".$udata['pfad']."/userdaten.txt");
 	echo "<tr>";
-	if($_user->_loginname == $string[1]){
+	if($_user->_loginname == $udata['name']){
 		echo "<td class='td_background_info' width=100 align=left>";
 	}else{
 		echo "<td class='td_background_top' width=100 align=left>";

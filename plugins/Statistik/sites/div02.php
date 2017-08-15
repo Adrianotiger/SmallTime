@@ -95,10 +95,10 @@
 $uz = 0;
 for($z = 1; $z < count($_users->_array ) ; $z++)
 {
-	$_file        		= "./Data/" .$_users->_array[$z][0] . "/Timetable/" .$wahljahr;
+	$_file        		= "./Data/" .$_users->_array[$z]['pfad'] . "/Timetable/" .$wahljahr;
 	
-	$_file_absenz 	= "./Data/".$_users->_array[$z][0]."/Timetable/A" . $wahljahr;
-	$_file_abstxt 		= "./Data/".$_users->_array[$z][0]."/absenz.txt";
+	$_file_absenz 	= "./Data/".$_users->_array[$z]['pfad']."/Timetable/A" . $wahljahr;
+	$_file_abstxt 		= "./Data/".$_users->_array[$z]['pfad']."/absenz.txt";
 	$abstxt       		= array();
 	if(file_exists($_file_abstxt))
 	{

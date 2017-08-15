@@ -20,3 +20,4 @@ V 0.9.015 24.02.2017 -> Beispiel für ein Touchscreen - Stempel - Terminal
 V 0.9.016 30.03.2017 -> Fehler bei der Jahresansicht / Fehler bei der Bildanzeige mit htaccess / Settings - Einstellungen - Abwesenheitsberechnungen
 V 0.9.016a 11.08.2018 -> Ferientage unter Admin-Einstellungen und nicht beim Benutzer / Chipdrive Funktionalität hinzugefügt
 V 0.9.016b 14.08.2018 -> Rapporte können mit Zeit-Formate ausgedruckt werden
+V 0.9.016c 15.08.2018 -> Users in XML Datei, xmlHandle hinzugefügt

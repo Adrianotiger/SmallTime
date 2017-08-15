@@ -22,9 +22,10 @@ $_user = new time_user();
 if(isset($_GET['admin_id'])){
 	$_id = $_GET['admin_id'];
 	$_SESSION['id'] = $_id;
-	$_SESSION['username'] = $_users->_array[$_id][1];
-	$_SESSION['passwort'] = $_users->_array[$_id][2];
-	$_SESSION['datenpfad'] = $_users->_array[$_id][0];	
+	$_SESSION['username'] = $_users->_array[$_id]['name'];
+	$_SESSION['passwort'] = $_users->_array[$_id]['passwort'];
+	$_SESSION['datenpfad'] = $_users->_array[$_id]['pfad'];
+  $_SESSION['rfid'] = $_users->_array[$_id]['rfid'];	
 }
 $_user->load_data_session();	
 // ----------------------------------------------------------------------------

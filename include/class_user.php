@@ -101,8 +101,9 @@ class time_user{
 			if ($this->_modell==NULL) $this->_modell = 0;
 		}	
 	}
+/*
 	function set_user_data($_id,$pfad,$loginname,$passwort,$rfid){
-		$_zeilenvorschub = "\r\n";
+	  $_zeilenvorschub = "\r\n";
 		$_users= file("./Data/users.txt");
 		if($_POST['absenden'] == "OK"){
 			Global $_id;
@@ -115,8 +116,8 @@ class time_user{
 			$open = fopen("./Data/users.txt","w+");
 			fwrite ($open, $neu);
 			fclose($open);
-		}		
-	}
+		}
+	}*/
 	function set_user_details(){
 		$_zeilenvorschub = "\r\n";
 		$_file = "./Data/".$this->_ordnerpfad."/userdaten.txt";

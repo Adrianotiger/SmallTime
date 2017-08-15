@@ -84,6 +84,7 @@ include_once ('./include/class_pausen.php');
 include_once ('./include/class_jahr.php');
 include_once ('./include/class_feiertage.php');
 include_once ('./include/class_filehandle.php');
+include_once ('./include/class_xmlhandle.php');
 include_once ('./include/class_rapport.php');
 include_once ('./include/class_show.php');
 include_once ('./include/class_settings.php');
@@ -101,9 +102,9 @@ if($_GET['calc']){
 // ----------------------------------------------------------------------------
 // Modler allgemeine Daten laden
 // ----------------------------------------------------------------------------
-$_users         	= new time_filehandle("./Data/","users.txt",";");
-$_groups        = new time_filehandle("./Data/","group.txt",";");
-$_settings      	= new time_settings();
+$_users         	  = new xml_filehandle("./Data/","users.xml");
+$_groups            = new time_filehandle("./Data/","group.txt",";");
+$_settings      	  = new time_settings();
 $_template          = new time_template("index.php");
 $_template->_user01 = "sites_admin/admin01.php";
 $_template->_user02 = "sites_login/login_mehr_02.php";
@@ -253,7 +254,7 @@ switch($_action){
 	case "delete_user":
 		if($_POST['absenden'] == "OK"){
 			$id = $_GET['delete_user_id'];
-			$_infotext04 = $_users->delete_user($id, $_users->_array[$id][0]);
+			$_infotext04 = $_users->delete_user($id);
 			header("Location: admin.php?action=delete_user&show=delete");		
 		}elseif($_POST['absenden'] == "CANCEL"){
 			$_infotext = getinfotext( "User wurde nicht gel&ouml;scht.","td_background_heute"); 
@@ -493,7 +494,8 @@ switch($_action){
 		$_b = $_POST['_b'];
 		$_c = $_POST['_c'];
 		$_d = $_POST['_d'];
-		$_user->set_user_data($_id,$_a,$_b,$_c,$_d);
+		//$_user->set_user_data($_id,$_a,$_b,$_c,$_d);
+		$_users->update_user($_id, $_a, $_b, $_c, $_d);
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
@@ -588,7 +590,7 @@ switch($_action){
 					$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td><font color=red>Mitarbeiter <b>".$_a."</b> existiert bereits!</font></td></tr></table>";
 					$_infotext = getinfotext( $_infotext,"td_background_heute");	
 				}else{
-					$_users->insert_user($_a.";".$_b.";".$_c. ";".$_d);
+					$_users->insert_user($_a,$_b,$_c,$_d);
 					$_users->add_user($_a);
 					header("Location: admin.php?action=user_edit&admin_id=". $_users->get_anzahl());		
 					$_infotext = "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Mitarbeiter <b>".$_a."</b> wurde erfolgreich erstellt.</td></tr></table>";
