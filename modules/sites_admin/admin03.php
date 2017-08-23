@@ -20,15 +20,15 @@ foreach($_benutzer->_array as $udata){
 	}else{
 		echo "<td class='td_background_top' width=100 align=left>";
 	}
-	echo "<a title='Userdaten anzeigen von diesem Monat' href='?action=user_personalkarte&admin_id=".$i."'><img src='images/icons/user.png' border=0> ";
-	echo "Nr. ". $i . " / " ;
+	echo "<a title='Userdaten anzeigen von diesem Monat' href='?action=user_personalkarte&admin_id=".$udata['id']."'><img src='images/icons/user.png' border=0> ";
+	echo "Nr. ". $udata['id'] . " / " ;
 	echo $_userdaten_tmp[0];
 	echo "</a>";
 	//-----------------------------------------------------------------------------
 	// Mitarbeiter - Menu
 	//-----------------------------------------------------------------------------
 	if($i > 1){
-		$tmpstr= "<span class='btn'><a title='L&ouml;schen eines Users' href='?action=delete_user&delete_user_id=".$i."'><img src='images/icons/delete.png' border=0></a></span>";
+		$tmpstr= "<span class='btn'><a title='L&ouml;schen eines Users' href='?action=delete_user&delete_user_id=".$udata['id']."'><img src='images/icons/delete.png' border=0></a></span>";
 	}else{
 		$tmpstr= "";
 	}	
@@ -36,44 +36,44 @@ foreach($_benutzer->_array as $udata){
 	echo "
 	<div class='btn-group'>
 		<span class='btn";
-		if($_action == 'show_time' && $i ==$_SESSION['id']) echo ' active'; 
+		if($_action == 'show_time' && $udata['id'] ==$_SESSION['id']) echo ' active'; 
 		echo "'>
-               	<a title='Monatsansicht' href='?action=show_time&admin_id=".$i."'><img src='images/icons/calendar_view_month.png' border='0'></a>
+               	<a title='Monatsansicht' href='?action=show_time&admin_id=".$udata['id']."'><img src='images/icons/calendar_view_month.png' border='0'></a>
                </span>
                <span class='btn";
-		if($_action == 'show_year2' && $i ==$_SESSION['id']) echo ' active'; 
+		if($_action == 'show_year2' && $udata['id'] ==$_SESSION['id']) echo ' active'; 
 		echo "'>
-               	<a title='Jahres&uuml;bersicht Details' href='?action=show_year2&admin_id=".$i."''><img src='images/icons/calendar.png' border='0'></a>
+               	<a title='Jahres&uuml;bersicht Details' href='?action=show_year2&admin_id=".$udata['id']."''><img src='images/icons/calendar.png' border='0'></a>
                </span>
                <span class='btn";
-		if($_action == 'show_year' && $i ==$_SESSION['id']) echo ' active'; 
+		if($_action == 'show_year' && $udata['id'] ==$_SESSION['id']) echo ' active'; 
 		echo "'>
-               	<a title='Jahres&uuml;bersicht' href='?action=show_year&admin_id=".$i."'><img src='images/icons/table_multiple.png' border=0></a>
+               	<a title='Jahres&uuml;bersicht' href='?action=show_year&admin_id=".$udata['id']."'><img src='images/icons/table_multiple.png' border=0></a>
                </span>
                <span class='btn";
-		if($_action == 'show_pdf' && $i ==$_SESSION['id']) echo ' active'; 
+		if($_action == 'show_pdf' && $udata['id'] ==$_SESSION['id']) echo ' active'; 
 		echo "'>
-               	<a title='Vorhandene PDF' href='?action=show_pdf&admin_id=".$i."'><img src='images/icons/page_white_acrobat.png' border=0></a>
+               	<a title='Vorhandene PDF' href='?action=show_pdf&admin_id=".$udata['id']."'><img src='images/icons/page_white_acrobat.png' border=0></a>
                </span>
                <span class='btn";
-		if($_action == 'zip_user' && $i ==$_SESSION['id']) echo ' active'; 
+		if($_action == 'zip_user' && $udata['id'] ==$_SESSION['id']) echo ' active'; 
 		echo "'>
-               	<a title='ZIP-Datei erstellen' href='?action=zip_user&admin_id=".$i."'><img src='images/icons/page_white_zip.png' border=0></a>
+               	<a title='ZIP-Datei erstellen' href='?action=zip_user&admin_id=".$udata['id']."'><img src='images/icons/page_white_zip.png' border=0></a>
                </span>
                <span class='btn";
-		if($_action == 'user_einstellungen' && $i ==$_SESSION['id']) echo ' active'; 
+		if($_action == 'user_einstellungen' && $udata['id'] ==$_SESSION['id']) echo ' active'; 
 		echo "'>
-               	<a title='Grundeinstellungen' href='?action=user_einstellungen&admin_id=".$i."'><img src='images/icons/folder_user.png' border=0></a>
+               	<a title='Grundeinstellungen' href='?action=user_einstellungen&admin_id=".$udata['id']."'><img src='images/icons/folder_user.png' border=0></a>
                </span>
                <span class='btn";
-		if($_action == 'user_edit' && $i ==$_SESSION['id']) echo ' active'; 
+		if($_action == 'user_edit' && $udata['id'] ==$_SESSION['id']) echo ' active'; 
 		echo "'>
-               	<a title='Userdaten einstellen' href='?action=user_edit&admin_id=".$i."'><img src='images/icons/user_edit.png' border=0></a>
+               	<a title='Userdaten einstellen' href='?action=user_edit&admin_id=".$udata['id']."'><img src='images/icons/user_edit.png' border=0></a>
                </span>
                <span class='btn";
-		if($_action == 'user_edit_absenzen' && $i ==$_SESSION['id']) echo ' active'; 
+		if($_action == 'user_edit_absenzen' && $udata['id'] ==$_SESSION['id']) echo ' active'; 
 		echo "'>
-               	<a title='Absenzen einstellen' href='?action=user_edit_absenzen&admin_id=".$i."'><img src='images/icons/date_edit.png' border=0></a>
+               	<a title='Absenzen einstellen' href='?action=user_edit_absenzen&admin_id=".$udata['id']."'><img src='images/icons/date_edit.png' border=0></a>
                </span>            
                	".$tmpstr."
 	</div>
@@ -134,7 +134,7 @@ if(!$show_user){
 		echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
 		echo "</tr>";
 		// Falls Settings - ferien nur bis heute Berechnet werden zukünftige anzeigen lassen
-		if($_settings->_array[27][1]){
+		if($_settings->_array["Absenz Berechnung 1"]["value"]==1){
 			echo "<tr>";
 			echo "<td class='td_background_tag' align=left>geplante Ferien</td>";
 			echo "<td class=td_background_tag align=left>$_jahr->_summe_Fz Tage</td>";

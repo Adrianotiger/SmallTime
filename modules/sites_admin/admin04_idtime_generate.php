@@ -45,16 +45,15 @@
 <?php
         $idtime_secret = 'CHANGEME'; // gleichzeitig in idtime.php ändern
 
-        $fp = @fopen('./Data/users.txt', 'r');
-        @fgets($fp); // erste Zeile überspringen
-        while (($logindata = fgetcsv($fp, 0, ';')) != false) {
-                $hash = sha1($logindata[1].$logindata[2].crypt($logindata[1], '$2y$04$'.substr($idtime_secret.$logindata[2], 0, 22)));
+        include_once "./include/class_xmlhandle.php";
+        $_users = new xml_filehandle("./Data/", "users.xml");
+        foreach($_users->_array as $_user) {
+                $hash = sha1($_user['name'].$_user['passwort'].crypt($_user['name'], '$2y$04$'.substr($idtime_secret.$_user['passwort'], 0, 22)));
                 $ID = substr($hash, 0, 16);
                 echo '<div class="idtime">';
-                echo '<h2>'.$logindata[1].'</h2>';
+                echo '<h2>'.$_user['name'].'</h2>';
                 echo '<a class="qrcode" data-qrcode="'.$ID.'"></a><br/>'.$ID;
-				echo '<br><a href=idtime.php?id='. $ID.'><font style="color:red">Link->IDTime</font></a>';
-				echo '</div>';  
+  				echo '<br><a href=idtime.php?id='. $ID.'><font style="color:red">Link->IDTime</font></a>';
+  				echo '</div>';  
         }
-        fclose($fp);
 ?>

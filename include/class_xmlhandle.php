@@ -12,7 +12,8 @@ class xml_filehandle{
   public $_root       = "";
   public $_entryname  = "";
   public $_array      = NULL;
-  public $_userid     = 1;
+  public $_entryid    = 1;
+  public $_biggestid  = 1;   
   
   function __construct($_filepfad, $_filename){
     $this->_filename = $_filename;
@@ -39,7 +40,21 @@ class xml_filehandle{
   }
   function delete_entry($id){
     unset($this->_array[$id]);
+    $this->save_xml();
   }
+  function update_entry($id, $values){
+    $this->_array[$id] = $values;
+    $this->save_xml();
+  }
+  function get_first_entry()
+  {
+    foreach($this->_array as $xmlElement)
+    {
+      return $xmlElement;
+    }
+    return null;
+  }
+  
   function save_xml()
   {
     $xml = new XMLWriter();
@@ -67,7 +82,7 @@ class xml_filehandle{
   {
     if(file_exists($this->_filepfad.$this->_filename))
     {
-      $this->_userid = 1;
+      $this->_entryid = 1;
       unset($this->$_array);
       
       $xml = new XMLReader();
@@ -86,7 +101,11 @@ class xml_filehandle{
             $xmlAtt = $xml->expand()->attributes;
             for($j=0;$j<$xmlAtt->length;$j++)
               $values[$xmlAtt[$j]->name] = $xmlAtt[$j]->value;
-            $this->_array[$this->_userid++] = $values;
+            if(!isset($values['id']))
+              $values['id'] = $this->_biggestid+1;
+            if(is_numeric($values['id']) && $values['id'] >= $this->_biggestid) $this->_biggestid = $values['id'];
+            
+            $this->_array[$values['id']] = $values;
           }  
         }
       }
@@ -104,20 +123,27 @@ class xml_filehandle{
   
   function insert_user($pfad, $name, $passwort, $rfid){
     $values = array();
+    $values['id'] = $this->_biggestid + 1;
     $values['name'] = $name;
     $values['pfad'] = $pfad;
     $values['passwort'] = $passwort;
     $values['rfid'] = $rfid;
-    $this->_array[$this->$_userid++] = $values;
+    $this->_array[$values['id']] = $values;
     $this->save_xml();
   }
   
   function update_user($_id, $pfad, $name, $passwort, $rfid){
-    $this->_array[$_id]['name'] = $name;
-    $this->_array[$_id]['pfad'] = $pfad;
-    $this->_array[$_id]['passwort'] = sha1($passwort);
-    $this->_array[$_id]['rfid'] = $rfid;
-    $this->save_xml();
+    foreach($this->_array as $usr)
+    {
+      if($usr['pfad'] == $pfad)
+      {
+        $this->_array[$_id]['name'] = $name;
+        $this->_array[$_id]['passwort'] = sha1($passwort);
+        $this->_array[$_id]['rfid'] = $rfid;
+        $this->save_xml();        
+        break;
+      }
+    }
   }
 
   function add_user($_a){

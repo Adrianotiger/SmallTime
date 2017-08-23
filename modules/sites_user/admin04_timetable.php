@@ -11,13 +11,13 @@
 // Spaltenreite vergrössern, wenn Benutzer keine Berechtigungen haben
 // ----------------------------------------------------------------------------
 $t = 1;
-if($_settings->_array[15][1]||$_settings->_array[26][1]) $t++;
-if($_settings->_array[16][1]||$_settings->_array[26][1]) $t++;
+if($_settings->_array["Eine Zeit hinzufügen"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1) $t++;
+if($_settings->_array["Anwesenheitsliste"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1) $t++;
 $a = 1;
-if($_settings->_array[17][1]||$_settings->_array[26][1]) $a++;
-if(!$_settings->_array[18][1||$_settings->_array[26][1]]) $a++;
+if($_settings->_array["Absenzen eingeben"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1) $a++;
+if(!$_settings->_array["Raport eintragen"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1) $a++;
 $modal = "";
-$zeitformat = ($_settings->_array[29][1] == 1);
+$zeitformat = ($_settings->_array["Zeit Darstellung"]["value"] == 1);
 if(strstr($_template->_modal,'true')) $modal = "&modal";
 ?>
 <table width=100% border=0 cellpadding=3 cellspacing=1>
@@ -27,7 +27,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                 <td class=td_background_top width="40" align="center">Std.</td>
                 <td class=td_background_top width="40" align="center">Saldo</td>
                 <td COLSPAN="<?php echo $a; ?>" class="td_background_top" width="50" align="center">Absenzen</td>
-                <?php if($_settings->_array[18][1]) echo "<td class=td_background_top width=16 align=center>Do</td>"; ?>
+                <?php if($_settings->_array["Raport eintragen"]["value"]) echo "<td class=td_background_top width=16 align=center>Do</td>"; ?>
         </tr>
         <?php
         for($z=1; $z< count($_monat->_MonatsArray); $z++){
@@ -48,11 +48,11 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                 // Falls User die Zeit eintragen darf - anzeigen
                 //-------------------------------------------------------------------------
 
-                if($_settings->_array[15][1]==1||$_settings->_array[26][1]) echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='Zeit hinzuf&uuml;gen'><img border='0' src='images/icons/time_add.png'></a></td>\n";
+                if($_settings->_array["Eine Zeit hinzufügen"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1) echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='Zeit hinzuf&uuml;gen'><img border='0' src='images/icons/time_add.png'></a></td>\n";
                 //-------------------------------------------------------------------------
                 // Falls User mehrere zeiten eintragen darf - anzeigen
                 //-------------------------------------------------------------------------
-                if($_settings->_array[16][1]==1||$_settings->_array[26][1]) echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time_list&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='mehrere Zeiten hinzuf&uuml;gen'><img border='0' src='images/icons/time_go.png'></a></td>\n";
+                if($_settings->_array["Anwesenheitsliste"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1) echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center><a href='?action=add_time_list&timestamp=". $_monat->_MonatsArray[$z][0].$modal."' title='mehrere Zeiten hinzuf&uuml;gen'><img border='0' src='images/icons/time_go.png'></a></td>\n";
                 //-------------------------------------------------------------------------
                 // Stempelzeiten anzeigen mit Link zum editieren falls in den Settings true
                 //-------------------------------------------------------------------------
@@ -62,7 +62,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                         // Trennzeichen bei Stempelzeiten als $trenn
                         if($x==0){$trenn = "";}elseif($x%2 and $x<>0){$trenn = "-";}else{$trenn = " / ";}
                         $tmp = $tmp . $trenn;
-                        if($_settings->_array[14][1]||$_settings->_array[26][1]){
+                        if($_settings->_array["Stempelzeit edit 1"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]){
                                 $tmp = $tmp ."<a href='?action=edit_time&timestamp=".$_monat->_MonatsArray[$z][10][$x].$modal."' title='Zeit editieren' class='time'>".$_monat->_MonatsArray[$z][12][$x]."</a>";
                         }else{
                                 $tmp = $tmp . ' '.$_monat->_MonatsArray[$z][12][$x].' ';
@@ -100,7 +100,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                 //-------------------------------------------------------------------------
                 // Absenzen enzeigen
                 //-------------------------------------------------------------------------
-                if($_settings->_array[17][1]||$_settings->_array[26][1]){
+                if($_settings->_array["Absenzen eingeben"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1){
                         echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center>".$_monat->_MonatsArray[$z][31]."</td>\n";
                 }
                 echo " <td ". $_monat->_MonatsArray[$z][30]." width=62 align=center>";
@@ -120,7 +120,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                 //-------------------------------------------------------------------------
                 // Rapport editieren oder erstellen
                 //-------------------------------------------------------------------------
-                if($_settings->_array[18][1]||$_settings->_array[26][1]){
+                if($_settings->_array["Raport eintragen"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1){
                         echo " <td ". $_monat->_MonatsArray[$z][30]." width=16 align=center>".$_monat->_MonatsArray[$z][33]."</td>\n";
                 }
                 echo " </tr>\n";
@@ -148,7 +148,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                 </td>
                 <td COLSPAN=<?php echo $a; ?> class=td_background_top width=50 align=center><?php echo $_monat->_SummeAbsenzProMonat?></td>
                 <?php
-                if($_settings->_array[18][1]) echo "<td class=td_background_top width=16 align=center> </td>";
+                if($_settings->_array["Raport eintragen"]["value"]==1) echo "<td class=td_background_top width=16 align=center> </td>";
                 ?>
         </tr>
 </table>

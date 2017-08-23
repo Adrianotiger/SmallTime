@@ -63,7 +63,7 @@ echo "</tr>";
 echo "</table>";
 echo "<br>";
 
-$monate = explode(";",$_settings->_array[11][1]);
+$monate = explode(";",$_settings->_array["Monatsanzeige"]["value"]);
 $y      = $_jahr->_startjahr;
 $_now   = date("Y", time());
 $_to    = $_jahr->_startjahr;

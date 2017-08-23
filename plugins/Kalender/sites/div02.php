@@ -19,17 +19,16 @@ for($i=1; $i<count($_monat->_MonatsArray); $i++){
         echo '><font size="-6">'.$tmp[0].'</font></td>';
 }
 echo '</tr>';
-$_benutzer = file("./Data/users.txt");
-unset($_benutzer[0]);
-foreach($_benutzer as $string){
+include_once "./include/class_xmlhandle.php";
+$_users = new xml_filehandle("./Data/", "users.xml");
+foreach($_users->_array as $_user) {
         echo '<tr>';
-        $string = explode(";", $string);
-        $_userdaten_tmp = file("./Data/".$string[0]."/userdaten.txt");
+        $_userdaten_tmp = file("./Data/".$_user['pfad']."/userdaten.txt");
 
         //Absenzen laden
         $_user_absenzen = array();
-        if (file_exists("./Data/".$string[0]."/Timetable/A". $_time->_jahr)){
-                $_user_absenzen = file("./Data/".$string[0]."/Timetable/A". $_time->_jahr);
+        if (file_exists("./Data/".$_user['pfad']."/Timetable/A". $_time->_jahr)){
+                $_user_absenzen = file("./Data/".$_user['pfad']."/Timetable/A". $_time->_jahr);
         }
         // Monatsanzeige
         for($i=1; $i<count($_monat->_MonatsArray); $i++){
@@ -53,7 +52,7 @@ foreach($_benutzer as $string){
                 }
                 //Arbeitstag, falls nein Wochenende anzeigen
                 $_arbeitstag = explode(";",$_userdaten_tmp[7]);
-                $zeiten =  time_user::get_user_stempelzeiten($string[0], $_time->_jahr, $_time->_monat ,$i );
+                $zeiten =  time_user::get_user_stempelzeiten($_user['pfad'], $_time->_jahr, $_time->_monat ,$i );
                 if($_arbeitstag[$_monat->_MonatsArray[$i][2]]==0 or $_monat->_MonatsArray[$i][2]==6 or $_monat->_MonatsArray[$i][5] >=0){
                         echo ' class="td_background_wochenende"';
                 }elseif($_text){

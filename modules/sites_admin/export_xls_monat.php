@@ -9,7 +9,7 @@
 *******************************************************************************/
 $stempelzeiten = 6;
 $xls ='';
-$zeitformat = ($_settings->_array[29][1] == 1);
+$zeitformat = ($_settings->_array["Zeit Darstellung"]["value"] == 1);
 $xls .='
 <table>
 	<tr>

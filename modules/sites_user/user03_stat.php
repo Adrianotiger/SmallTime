@@ -66,7 +66,7 @@ echo "' align=left>Feriensaldo</td>";
 echo "<td class=td_background_tag align=left>$_jahr->_saldo_F Tage</td>";
 echo "</tr>";
 // Falls Settings - ferien nur bis heute Berechnet werden zukünftige anzeigen lassen
-if($_settings->_array[27][1]){
+if($_settings->_array["Absenz Berechnung 1"]["value"]==1){
 	echo "<tr>";
 	echo "<td class='td_background_tag' align=left>geplante Ferien</td>";
 	echo "<td class=td_background_tag align=left>$_jahr->_summe_Fz Tage</td>";

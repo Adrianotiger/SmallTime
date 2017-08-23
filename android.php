@@ -23,24 +23,23 @@ if(isset($_GET['rfid'])){
         // Benutzerdaten in Array ( RFID => Pfad ) lesen:
         // Mac - Adresse des Gerätes ist die RFID
         // ----------------------------------------------------------------------------------------------
-        $fp = @fopen('./Data/users.txt', 'r');
-        @fgets($fp); // erste Zeile überspringen
-        $u=1;
-        while(($logindata = fgetcsv($fp, 0, ';')) != false){
-                if(@$logindata[3]==$rfid ){
+        include_once "./include/class_xmlhandle.php";
+		$_users = new xml_filehandle("./Data/", "users.xml");
+		$u = 0;
+		foreach($_users->_array as $_user) {
+                if(@$_user['rfid']==$rfid ){
                         //erste Spalte der Datei "./Data/user.txt" ist der Pfad des users
-                        $user = $logindata[0];
+                        $user = $_user['pfad'];
                         $login = true;
-                        $_SESSION['admin']                 = $logindata[0]; //$this->_datenpfad;
+                        $_SESSION['admin']                 = $_user['pfad']; //$this->_datenpfad;
                         $_SESSION['id']                         = $u;
-                        $_SESSION['datenpfad']         = $logindata[0]; //$this->_datenpfad;
-                        $_SESSION['username']         = $logindata[1]; //$this->_username;
-                        $_SESSION['passwort']         = $logindata[2]; //$this->_passwort;
+                        $_SESSION['datenpfad']         = $_user['pfad']; //$this->_datenpfad;
+                        $_SESSION['username']         = $_user['name']; //$this->_username;
+                        $_SESSION['passwort']         = $_user['passwort']; //$this->_passwort;
                         $_SESSION['login']                 = true; //$this->_login;
                 }
                 $u++;
         }
-        fclose($fp);
         // ----------------------------------------------------------------------------------------------
 }else{
         $login = false;
@@ -63,15 +62,15 @@ if($login){
         include_once ('./include/class_show.php');
         include_once ('./include/class_settings.php');
         include ("./include/time_funktionen.php");
-        $_users                = new time_filehandle("./Data/","users.txt",";");
-        $_groups        = new time_filehandle("./Data/","group.txt",";");
+        $_users                = new xml_filehandle("./Data/","users.xml");
+        $_groups        = new xml_filehandle("./Data/","group.xml");
         $_settings        = new time_settings();
         $_time = new time();
-        $_time->set_monatsname($_settings->_array[11][1]);
+        $_time->set_monatsname($_settings->_array["Monatsanzeige"]["value"]);
         $_user = new time_user();
         $_user->load_data_session();
         $_absenz = new time_absenz($_user->_ordnerpfad, $_time->_jahr);
-        $_monat         = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1], $_settings->_array[28][1]);
+        $_monat         = new time_month( $_settings->_array["Landeseinstellung (Bundes - Feiertag)"]["value"], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array["Pause ab X Stunden"]["value"],$_settings->_array["Automatische Pause"]["value"],$_settings->_array["Absenz Berechnung 1"]["value"], $_settings->_array["Absenz Berechnung 2"]["value"]);
         $_jahr = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_time->_timestamp);
         // ----------------------------------------------------------------------------------------------
         // Controller action - Handling

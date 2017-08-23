@@ -93,12 +93,12 @@
 </script>
 <?php
 $uz = 0;
-for($z = 1; $z < count($_users->_array ) ; $z++)
+foreach($_users->_array as $_user)
 {
-	$_file        		= "./Data/" .$_users->_array[$z]['pfad'] . "/Timetable/" .$wahljahr;
+	$_file        		= "./Data/" .$_user['pfad'] . "/Timetable/" .$wahljahr;
 	
-	$_file_absenz 	= "./Data/".$_users->_array[$z]['pfad']."/Timetable/A" . $wahljahr;
-	$_file_abstxt 		= "./Data/".$_users->_array[$z]['pfad']."/absenz.txt";
+	$_file_absenz 	= "./Data/".$_user['pfad']."/Timetable/A" . $wahljahr;
+	$_file_abstxt 		= "./Data/".$_user['pfad']."/absenz.txt";
 	$abstxt       		= array();
 	if(file_exists($_file_abstxt))
 	{

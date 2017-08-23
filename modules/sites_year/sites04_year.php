@@ -23,7 +23,7 @@ for($i = 0; $i < 12;$i++)
 	// ----------------------------------------------------------------------------
 	$_temp_time = new time();
 	$_temp_time->set_timestamp(mktime(0,0,0,$i + 1,1,$_time->_jahr));
-	$time_month = new time_month( $_settings->_array[12][1], $_temp_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $i + 1, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1]);
+	$time_month = new time_month( $_settings->_array["Landeseinstellung (Bundes - Feiertag)"]["value"], $_temp_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $i + 1, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array["Pause ab X Stunden"]["value"],$_settings->_array["Automatische Pause"]["value"], $_settings->_array["Absenz Berechnung 1"]["value"], $_settings->_array["Absenz Berechnung 2"]["value"]);
 	
 	$_temp_time = NULL;
 	
@@ -88,7 +88,7 @@ echo "<br>";
 // ----------------------------------------------------------------------------
 // Viewer für die Jahresansicht
 // ----------------------------------------------------------------------------
-$monate = explode(";",$_settings->_array[11][1]);
+$monate = explode(";",$_settings->_array["Monatsanzeige"]["value"]);
 echo "<table width='100%' hight='100%' border='0' cellpadding='3' cellspacing='1'>";
 echo "<tr>";
 echo "<td class='td_background_top' align='middle'>";

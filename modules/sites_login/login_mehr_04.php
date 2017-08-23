@@ -130,7 +130,7 @@ function setAdmin(){
 }
 
 //vSettings - Einstellungen : Anwesenheitsliste anzeigen
-if($_settings->_array[13][1] OR $_SESSION['admin']){
+if($_settings->_array["Anwesenheit zeigen"]["value"]==1 || $_SESSION['admin']){
 	//template unsterstützt Bootstrap
 	if(strstr($_template->_bootstrap,'true')){
 		//-------------------------------------------------------------------------------------------------------------

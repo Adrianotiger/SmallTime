@@ -120,7 +120,7 @@ $_timelistMitarbeiter = array();
 if(file_exists($_file))
 {
   $_timelistMitarbeiter = array();
-  $_show = 0;
+  $_show = 1;
   {
     $table = "";
     $table .= "<table bgcolor=white border=0 width=100% cellpadding=3 cellspacing=1>";
@@ -147,7 +147,7 @@ if(file_exists($_file))
       $i = 8;
       $time1 = ord($_zeile[$i++]) + ord($_zeile[$i++]) * 0x100 + ord($_zeile[$i++]) * 0x10000 + ord($_zeile[$i++]) * 0x1000000;
       $time1 *= 60;
-      $time1 += 631152000;
+      $time1 += gmmktime(0,0,0,1,1,1990);
       
       //-------------------------------------------------------------------------------------------
       //timestamp 1
@@ -157,7 +157,7 @@ if(file_exists($_file))
       //-------------------------------------------------------------------------------------------
       //timestamp 2
       $table .= "<td class='td_background_tag' widht=20> time : ";
-      $table .= date("d.m.Y H:i", $time1);
+      $table .= gmdate("d.m.Y H:i", $time1);
       $table .= '</td>';
       $table .= '</tr>';
       
@@ -193,15 +193,14 @@ echo "<hr color=red>";
 //wenn Bereit, importieren
 if($_POST['importieren'])
 {
+  include_once "./include/class_xmlhandle.php";
+  $_users = new xml_filehandle("./Data/", "users.xml");
   $users = array();
-  $fp = @fopen('./Data/users.txt', 'r');
-  @fgets($fp); // erste Zeile überspringen
-  while (($logindata = fgetcsv($fp, 0, ';')) != false) 
+  foreach($_users->_array as $_user) 
   {
-    $users[$logindata[3]]['username'] = $logindata[1];
-    $users[$logindata[3]]['pfad'] = $logindata[0];
+    $users[$_user['rfid']]['username'] = $_user['name'];
+    $users[$_user['rfid']]['pfad'] = $_user['pfad'];
   }
-  fclose($fp);
     
   foreach($_timelistMitarbeiter as $_mitarbeiterID => $_timelist)
   {

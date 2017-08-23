@@ -22,17 +22,17 @@ class pausen{
 			$anzahl = 0;
 			$_settings 	= new time_settings();
 			//$_settings von alten einstellungen übernehmen wenn im neuen File nix drin ist
-			if($_settings->_array[21][1]){
-				$time = $_settings->_array[22][1] * 60;	
-				$file->_array[$anzahl] = $_settings->_array[21][1] . ';99;' . $time;		
+			if($_settings->_array["Pause ab X Stunden"]["value"]>0){
+				$time = $_settings->_array["Automatische Pause"]["value"] * 60;	
+				$file->_array[$anzahl] = $_settings->_array["Pause ab X Stunden"]["value"] . ';99;' . $time;		
 				$anzahl = 1;
 				// $_settings Pausen übernehmen von alten Einstellugnen 
 				$newpausen = new time_filehandle('./include/Settings/', 'pausen.txt', '\r\n');
 				$newpausen->insert_line($file->_array[0]);
 				$newpausen = null;
 				// $_settings Pausen auf 0 stellen 
-				$_settings->_array[21][1] = "0";
-				$_settings->_array[22][1] = "0";
+				$_settings->_array["Pause ab X Stunden"]["value"] = "0";
+				$_settings->_array["Automatische Pause"]["value"] = "0";
 				$savearr = array();
 				foreach($_settings->_array as $eintrag){
 					$savearr[] = implode('#', $eintrag);

@@ -29,8 +29,7 @@ echo 'User-ID (durch Komma getrennt) ';
 echo '</td>';
 echo '</tr>';
 
-foreach($_group->get_groups() as $_zeile){		
-	$_eintrag = explode(";", $_zeile);			
+foreach($_group->get_groups() as $_zeile){			
 	echo '<tr>';
 	echo '<td class="td_background_tag" widht="20" align=left>';
 	if($i>0){
@@ -45,10 +44,10 @@ foreach($_group->get_groups() as $_zeile){
 	echo '<input type="hidden" size="2" name="e'.$i.'" value="'.$_grpnr.'">';
 	echo '</td>';
 	echo '<td class="td_background_tag" align=left>';
-	echo '<input type="text" size="30" name="v'.$i.'" value="'.$_eintrag[1].'">';
+	echo '<input type="text" size="30" name="v'.$i.'" value="'.$_zeile['name'].'">';
 	echo '</td>';
 	echo '<td class="td_background_tag" align=left>';
-	echo '<input type="text" size="30" name="u'.$i.'" value="'.$_eintrag[2].'">';
+	echo '<input type="text" size="30" name="u'.$i.'" value="'.$_zeile['mitglieder'].'">';
 	echo '</td>';
 	echo '</tr>';
 	$i++;	

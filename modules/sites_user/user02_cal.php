@@ -10,7 +10,7 @@
 //TODO : Template ohne Bootstrap -> löschen
 if(strstr($_template->_bootstrap,'true')){
 	$i=1;
-	$monate = explode(";",$_settings->_array[11][1]);
+	$monate = explode(";",$_settings->_array["Monatsanzeige"]["value"]);
 	echo '	<ul class="nav nav-tabs jahresmenu">	';
 	foreach($monate as $_month){
 		$_timestamp = mktime(0, 0, 0, $i, 1, $_time->_jahr);
@@ -26,7 +26,7 @@ if(strstr($_template->_bootstrap,'true')){
 	echo '	</ul>';
 }else{
 	$i=1;
-	$monate = explode(";",$_settings->_array[11][1]);
+	$monate = explode(";",$_settings->_array["Monatsanzeige"]["value"]);
 	echo "<table width='100%' height='100%' border='0' cellpadding='0' cellspacing='0'><tr>";
 	foreach($monate as $_month){
 		$_timestamp = mktime(0, 0, 0, $i, 1, $_time->_jahr);

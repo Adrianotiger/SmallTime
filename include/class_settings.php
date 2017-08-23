@@ -14,28 +14,26 @@ class time_settings{
 	// Beschreibung, Eintrag, Info 
 	private 	$_file;
 	function __construct(){
-		$this->_file = new time_filehandle("./include/Settings/","settings.txt","#");
-		$this->_array = $this->_file->_array;
-		unset($this->_file);
+		//$this->_file = new time_filehandle("./include/Settings/","settings.txt","#");
+		//$this->_array = $this->_file->_array;
+    $this->_file = new xml_filehandle("./include/Settings/","settings.xml");
+    foreach($this->_file->_array as $arrVal)
+    {
+      $this->_array[$arrVal['id']] =  $arrVal;
+    }
 	}
 	function save_settings(){
-		$_newarray = array();
-		$_zeilenvorschub = "\r\n";
-		$anzahl = $_POST['anzahl'];
-		$fp = fopen($this->_filename,"w+");
-		for($x=0; $x<=$anzahl; $x++ ){
-			$_newarray[$x][0] = $this->_array[$x][0];
-			$_newarray[$x][1] = $_POST[$x];
-			$this->_array[$x][1] = $_POST[$x];
-			$_newarray[$x][2] = str_replace("\r", "", $this->_array[$x][2]);
-			$_newarray[$x][2] = str_replace("\n", "", $_newarray[$x][2]);
-			$_newarray[$x] = implode("#", $_newarray[$x]);
-			fputs($fp, $_newarray[$x]);
-			if($x<$anzahl) fputs($fp, $_zeilenvorschub);
-		}
-		fclose($fp);
+	  foreach($_POST as $_postkey => $_postvalue)
+    {
+      $_postkey = str_replace("_", " ", $_postkey);
+      if(isset($this->_file->_array[$_postkey]))
+        $this->_array[$_postkey]['value'] = $this->_file->_array[$_postkey]['value'] = $_postvalue;
+    }
+    
+    $this->_file->save_xml();
 	}
 	function save_array($arr){
+	  /*
 		$_zeilenvorschub = "\r\n";
 		//$anzahl = $_POST['anzahl'];
 		$fp = fopen($this->_filename,"w+");
@@ -43,5 +41,6 @@ class time_settings{
 			fputs($fp, $eintrag . $_zeilenvorschub);
 		}
 		fclose($fp);
+     */
 	}
 }

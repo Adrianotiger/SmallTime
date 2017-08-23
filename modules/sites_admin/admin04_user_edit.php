@@ -101,7 +101,7 @@ echo "<td align=left class=td_background_tag valign='top'>Feiertage:</td>";
 echo "<td align=left class=td_background_tag >";
 echo "<table width='100%' border='0' cellpadding='0' cellspacing='0'>";
 $i          = 0;
-$_feiertage = new time_feiertage($_time->_jahr, $_settings->_array[12][1], $_user->_feiertage);
+$_feiertage = new time_feiertage($_time->_jahr, $_settings->_array["Landeseinstellung (Bundes - Feiertag)"]["value"], $_user->_feiertage);
 $FT         = $_feiertage->getFeiertageUserEdit();
 foreach($FT as $zeile)
 {

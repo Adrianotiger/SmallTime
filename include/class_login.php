@@ -75,10 +75,11 @@ class time_login{
 		if($this->_admins){
 			// Im Admin - Bereich darf sich nur der erste Benutzer einloggen
 			// oder alle in der ersten Gruppe(Administratoren)
-			$_file		= file("./Data/group.txt");
-			$_admins 	= $_file[0];
-			$_admins 	= explode(";", $_admins);
-			$_berechtigt 	= $_admins[2];
+			$_groups  = new xml_filehandle("./Data/","group.xml");
+			//$_file		= file("./Data/group.txt");
+			$_admins 	= $_groups->get_first_entry();
+			//$_admins 	= explode(";", $_admins);
+			$_berechtigt 	= $_admins['mitglieder'];
 			$_berechtigt 	= explode(",", $_berechtigt);	
 			foreach($_berechtigt as $u){
 			  $user = $userlist[trim($u)];
@@ -136,10 +137,11 @@ class time_login{
 		$u=0;
 		$_secure = false;
 		if($this->_admins){			
-			$_file		= file("./Data/group.txt");
-			$_admins 	= $_file[0];
-			$_admins 	= explode(";", $_admins);
-			$_berechtigt 	= $_admins[2];
+			$_groups  = new xml_filehandle("./Data/","group.xml");
+      //$_file    = file("./Data/group.txt");
+      $_admins  = $_groups->get_first_entry();
+			//$_admins 	= explode(";", $_admins);
+			$_berechtigt 	= $_admins['mitglieder'];
 			$_berechtigt 	= explode(",", $_berechtigt);	
 			foreach($_berechtigt as $u){
 				$_name 		= trim($userlist[trim($u)]['pfad']);

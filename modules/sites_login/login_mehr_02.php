@@ -7,7 +7,7 @@
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
-if($_settings->_array[13][1]){
+if($_settings->_array["Anwesenheit zeigen"]["value"]==1){
 	get_gruppen();
 }else{
 	echo $_infotext02;
@@ -22,20 +22,19 @@ function get_gruppen(){
 	foreach($_groups->_array as $_group){
 		// Administratorengruppe nicht anzeigen, dann ist $y ==1
 		if($y>1){
-			//$_group = explode(";", $_group);
 			if($_grpwahl==-1)$_grpwahl = 1;
 			
-			if($_grpwahl==$_group[0]-1){
+			if($_grpwahl==$_group['id']-1){
 				echo "        <td class='td_background_heute' align ='center' valign='middle' width='".$breite."%'>";
 			}else{
 				echo "        <td class='td_background_top' align ='center' valign='middle' width='".$breite."%'>";
 			}
 			echo "                <a href='?action=$_action&group=$y'>";
 			echo "                <img src='./images/icons/group_go.png'> ";
-			//echo $_group[0];
-			echo $_group[1];
+			//echo $_group['id'];
+			echo $_group['name'];
 			//echo $_grpwahl;
-			//echo $_group[2];
+			//echo $_group['mitglieder'];
 			echo "                </a>    ";
 			echo "                </td>";
 		}

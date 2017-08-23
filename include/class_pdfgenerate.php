@@ -41,11 +41,11 @@ class pdfgenerate{
 		unset($this->_users->_array['pfad']);
 		foreach($this->_users->_array as $user){
 			//Dokumenten - Pfad und Loginname
-			$arr[$i]['pfad'] 	= './Data/' . $user['0'] . '/';
-			$arr[$i]['pfad'] 	=  $user['0'];
-			$arr[$i]['name'] 	= $user['1'];
+			$arr[$i]['pfad'] 	= './Data/' . $user['pfad'] . '/';
+			$arr[$i]['pfad'] 	=  $user['pfad'];
+			$arr[$i]['name'] 	= $user['name'];
 			// Anzeigename des Mitarbeiters
-			$userdata = file( './Data/' . $user['0'] . '/userdaten.txt');
+			$userdata = file( './Data/' . $user['pfad'] . '/userdaten.txt');
 			$z=0;
 			foreach($userdata as $temp){
 				$userdata[$z] = trim($temp);
@@ -55,7 +55,7 @@ class pdfgenerate{
 			$arr[$i]['userstart'] 	= $userdata[1];
 			$arr[$i]['userstartmonat'] 	= date("m", $userdata[1]);
 			$arr[$i]['userstartjahr'] 	= date("Y",$userdata[1]);
-			$arr[$i]['pdflink'] = './Data/' . $user['0'] . '/Dokumente/' . $this->_jahr . '.' . $this->_monat . '.pdf';
+			$arr[$i]['pdflink'] = './Data/' . $user['pfad'] . '/Dokumente/' . $this->_jahr . '.' . $this->_monat . '.pdf';
 			$arr[$i]['pdfdatei'] =  $this->_jahr . '.' . $this->_monat . '.pdf';
 			$arr[$i]['pdflinkcreate'] =' ';
 			$arr[$i]['pdfexist'] = '0'; 
@@ -64,9 +64,9 @@ class pdfgenerate{
 				$arr[$i]['pdfexist'] = '1'; 
 				// Link zum PDF
 				$arr[$i]['pdflink'] ='
-				<a id="pdfhref" href="download.php?datei=' .$arr[$i]['pdfdatei'] . '&typ=pdf&pfad='.$user['0'].'">
+				<a id="pdfhref" href="download.php?datei=' .$arr[$i]['pdfdatei'] . '&typ=pdf&pfad='.$user['pfad'].'">
 				<img src="images/icons/page_white_acrobat.png" border="0" > - 
-				./Data/' . $user['0'] . '/Dokumente/' . $this->_jahr . '.' . $this->_monat . '.pdf
+				./Data/' . $user['pfad'] . '/Dokumente/' . $this->_jahr . '.' . $this->_monat . '.pdf
 				</a>';
 			}else{
 				if( $this->_jahr < $arr[$i]['userstartjahr']  ){

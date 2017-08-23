@@ -14,7 +14,7 @@ $_time = new time();
 if(isset($_GET["timestamp"])){
 	$_time->set_timestamp($_GET["timestamp"]);
 }
-$_time->set_monatsname($_settings->_array[11][1]);
+$_time->set_monatsname($_settings->_array["Monatsanzeige"]["value"]);
 // ----------------------------------------------------------------------------
 // USERDATEN
 // ----------------------------------------------------------------------------

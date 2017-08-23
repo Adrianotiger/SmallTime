@@ -9,22 +9,25 @@
 *******************************************************************************/
 class time_group
 {
-	private $_filename = "./Data/group.txt";
+	//private $_filename = "./Data/group.xml";
 	public 	$_array = NULL;
 	function __construct($_grpwahl)
 	{
 		if($_grpwahl >= 0)
 		{
-			$_groups = new time_filehandle("./Data/","group.txt",";" );
+			$_groups = new xml_filehandle("./Data/","group.xml" );
 			$_users  = new xml_filehandle("./Data/","users.xml" );
-			for($x = 1; $x < count($_groups->_array); $x++)
+      $x=-1;
+			foreach($_groups->_array as $_group)
 			{
-				$tmpgrp = explode(",",$_groups->_array[$x][2]);
+			  $x++;
+        if($x==0) continue; // Administrator
+			  $tmpgrp = explode(",",$_group['mitglieder']);
 				$y      = 0;
 				foreach($tmpgrp as $ma)
-				{
+				{   
 					// Gruppenbezeichnung
-					$this->_array[0][$x][] = $_groups->_array[$x]['name'];
+					$this->_array[0][$x][] = $_group['name'];
 					// Mitarbeiter ID
 					$this->_array[1][$x][] = $ma;
 					// Mitarbeiter Ordnerpfad
@@ -57,13 +60,11 @@ class time_group
 	}
 	function get_usergroup($userid)
 	{
-		$_groups = file($this->_filename);
-		$x       = 0;
-		foreach($_groups as $_group)
+	  $_groups = new xml_filehandle("./Data/","group.xml" );
+		foreach($_groups->array as $_group)
 		{
-			$_group = explode(";", $_group);
-			$_group[2] = explode(",", $_group[2]);
-			foreach($_group[2] as $users)
+			$mitglieder = explode(",", $_group['mitglieder']);
+			foreach($mitglieder as $users)
 			{
 				if($users == $userid and $x > 0)return $x;
 			}
@@ -134,9 +135,10 @@ class time_group
 		//--------------------------------------
 		//Absenzen: Gruppen in ein Array laden
 		//--------------------------------------
-		if(file_exists($this->_filename))
+		if(file_exists("./Data/"."group.xml"))
 		{
-			return file($this->_filename);
+			$_groups = new xml_filehandle("./Data/","group.xml" );
+      return $_groups->_array;
 		}
 		else
 		{
@@ -145,39 +147,28 @@ class time_group
 	}
 	function del_group($id)
 	{
-		$_temp = file($this->_filename);
-		unset($_temp[$id]);
-		foreach($_temp as $_zeile)
-		{
-			$_new[] = $_zeile;
-		}
-		$_anzahl = count($_new);
-		for($i = 0; $i < $_anzahl;$i++)
-		{
-			$_zeile = explode(";",$_new[$i]);
-			$_zeile[0] = $i + 1;
-			$_new[$i] = implode(";",$_zeile);
-		}
-		$neu = implode( "", $_new);
-		$open= fopen($this->_filename,"w+");
-		fwrite ($open, $neu);
-		fclose($open);
+		$_groups = new xml_filehandle("./Data/","group.xml" );
+    $_groups->delete_entry($id + 1);
 	}
 	function save_group()
 	{
-		$_zeilenvorschub = "\r\n";
 		$_anzahl         = $_POST['anzahl'];
-		$fp              = fopen($this->_filename,"w+");
-		for($x = 0; $x <= $_anzahl; $x++)
+		$_groups = new xml_filehandle("./Data/","group.xml" );
+    $x = 0;
+    foreach($_groups->_array as $_group)
 		{
 			$_temp_e = $_POST['e'.$x];
 			$_temp_v = $_POST['v'.$x];
 			$_temp_u = $_POST['u'.$x];
-			if($_temp_v <> "" && $_temp_e <> "")
+			if($_group['name'] <> $_temp_v || $_group['mitglieder'] <> $_temp_u)
 			{
-				fputs($fp, $_temp_e.";".$_temp_v.";".$_temp_u.$_zeilenvorschub);
+				$_groups->update_entry($x+1, array("id"=>$_group['id'], "name"=>$_temp_v, "mitglieder"=>$_temp_u));
 			}
+      $x++;
 		}
-		fclose($fp);
+    if($_anzahl > $x++ && $_POST['v'.$x] <> "")
+    {
+      $_groups->update_entry($_POST['e'.$x], array("id"=>$_POST['e'.$x], "name"=>$_POST['v'.$x], "mitglieder"=>$_POST['u'.$x]));
+    }
 	}
 }

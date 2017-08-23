@@ -9,10 +9,10 @@
 *******************************************************************************/
 $_last = new time();
 $_last->set_timestamp($_time->get_lastmonth());
-$_last->set_monatsname($_settings->_array[11][1]);
+$_last->set_monatsname($_settings->_array["Monatsanzeige"]["value"]);
 $_next = new time();
 $_next->set_timestamp($_time->get_nextmonth());
-$_next->set_monatsname($_settings->_array[11][1]);
+$_next->set_monatsname($_settings->_array["Monatsanzeige"]["value"]);
 ?>
 <table width='390' border='0' cellpadding='2' cellspacing='0'>
 	<tr>

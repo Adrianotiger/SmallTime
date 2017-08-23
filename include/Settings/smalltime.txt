@@ -1,2 +1,2 @@
-0.9.016c
+0.9.016d
 http://www.small.li/update

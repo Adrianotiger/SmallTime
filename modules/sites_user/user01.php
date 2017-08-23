@@ -10,20 +10,20 @@
 if (strstr($_template->_bootstrap,'true')){
 ?>
 	<ul class="nav nav-tabs adminmenu">	
-                <?php  if($_settings->_array[13][1]) {?><li<?php echo $_action=="anwesend" ?  ' class="active"':''; ?>><a id="Liste" title="Anwesenheitsliste" href="?action=anwesend">Liste</a></li> <?php }?>
+                <?php  if($_settings->_array["Anwesenheit zeigen"]["value"]==1) {?><li<?php echo $_action=="anwesend" ?  ' class="active"':''; ?>><a id="Liste" title="Anwesenheitsliste" href="?action=anwesend">Liste</a></li> <?php }?>
                 <li<?php echo $_action=="show_time" ?  ' class="active"':''; ?>><a id="Home" title="Home" href="?action=show_time">Home</a></li> 
                 <li<?php echo $_action=="show_year" ?  ' class="active"':''; ?>><a id="Jahr" title="Jahres&uuml;bersicht" href="?action=show_year">Jahr</a></li>
                 <li<?php echo $_action=="show_pdf" ?  ' class="active"':''; ?>><a id="PDF" title="PDF anzeigen" href="?action=show_pdf">PDF</a></li>
-              <?php if($_settings->_array[20][1]==0){ ?>
+              <?php if($_settings->_array["MA dürfen Drucken"]["value"]==0){ ?>
 		 <li<?php echo $_action=="print_month" ?  ' class="active"':''; ?>>
 			<a id="Drucken" title="Monats&uuml;bersicht drucken" href="?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0&calc=1">Drucken</a>
 		 </li>
-		<?php } elseif($_settings->_array[20][1] >= date("j", time())){	?>
+		<?php } elseif($_settings->_array["MA dürfen Drucken"]["value"] >= date("j", time())){	?>
 		 <li<?php echo $_action=="print_month" ?  ' class="active"':''; ?>>
 		 	<a id="Drucken" title="Monats&uuml;bersicht vom letzten Monat drucken" href="?action=print_month&timestamp=<?php echo $_time->_timestamp ?>&print=0">Drucken</a>
 		 </li>
 		<?php } ?>
-		 <?php  if($_settings->_array[24][1]){ ?>
+		 <?php  if($_settings->_array["Design auswählen"]["value"] == 1){ ?>
                 <li<?php echo $_action=="design" ?  ' class="active"':''; ?>><a id="Design" title="Design" href="?action=design">Design</a></li> 
                 <?php } ?>
                 <li<?php echo $_action=="password" ?  ' class="active"':''; ?>><a id="password" title="password" href="?action=password">Passwort</a></li>
@@ -66,9 +66,9 @@ if (strstr($_template->_bootstrap,'true')){
 //TODO : Template ohne Bootstrap -> löschen
 }else{ 
 	echo "<table width='400'  border='0' cellpadding='2' cellspacing='0'><tr><td valign='midle'>";
-	if($_settings->_array[13][1]) echo "<a title='Anwesenheits&uuml;bersicht' href='?action=anwesend'><img src='images/icons/report_user.png' border=0></a> ";
-	if($_settings->_array[13][1]) echo "</td><td valign='middle'>";
-	if($_settings->_array[13][1]) echo " | ";
+	if($_settings->_array["Anwesenheit zeigen"]["value"]) echo "<a title='Anwesenheits&uuml;bersicht' href='?action=anwesend'><img src='images/icons/report_user.png' border=0></a> ";
+	if($_settings->_array["Anwesenheit zeigen"]["value"]) echo "</td><td valign='middle'>";
+	if($_settings->_array["Anwesenheit zeigen"]["value"]) echo " | ";
 	echo "</td><td valign='middle'>";
 	echo "<a title='Home' href='?action=show_time'><img src='images/icons/house.png' border=0></a> ";
 	echo "</td><td valign='middle'>";
@@ -82,12 +82,12 @@ if (strstr($_template->_bootstrap,'true')){
 	echo "<a title='Vorhandene PDF' href='?action=show_pdf'><img src='images/icons/page_white_acrobat.png' border=0></a> ";
 	echo "</td><td valign='middle'>";
 	echo " | ";
-	if($_settings->_array[20][1]==0){	
+	if($_settings->_array["MA dürfen Drucken"]["value"]==0){	
 	echo "</td><td valign='middle'>";
 	echo "<a title='Monats&uuml;bersicht drucken' href='?action=print_month&timestamp=". $_time->_timestamp."&print=0'><img src='images/icons/printer.png' border=0></a> ";
 	echo "</td><td valign='middle'>";
 	echo " | ";
-	} elseif($_settings->_array[20][1] >= date("j", time())){	
+	} elseif($_settings->_array["MA dürfen Drucken"]["value"] >= date("j", time())){	
 	//--------------------------------------------------------------------------------------------------------
 	//wenn z.B. 20 eingestellt ist, wird nur der letzte Monat gedruckt
 	//--------------------------------------------------------------------------------------------------------
@@ -96,7 +96,7 @@ if (strstr($_template->_bootstrap,'true')){
 	echo "</td><td valign='middle'>";
 	echo " | ";
 	}
-	 if($_settings->_array[24][1]){
+	 if($_settings->_array["Design auswählen"]["value"]){
 	//Version 0.6 Desing wählen - wird in Cookie gespeichert
 	echo "</td><td valign='middle'>";
 	echo "<a title='Design' href='?action=design'><img src='images/icons/color_wheel.png' border=0></a> ";

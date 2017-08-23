@@ -187,10 +187,10 @@ class time_feiertage
 		if($easter = $this->easter($year))
 		{
 			//Landesfeiertag - aus den Settings------------------------------------------------------
-			if($_country == 1) $holidays['Bundesfeier'] = mktime(0,0,0,8,1,$year);
-			if($_country == 2) $holidays['Tag der deutschen Einheit'] = mktime(0,0,0,10,3,$year);
-			if($_country == 3) $holidays['&ouml;sterreichische Nationalfeiertag'] = mktime(0,0,0,10,26,$year);
-			if($_country == 4) $holidays['Staatsfeiertag in Liechtenstein'] = mktime(0,0,0,8,15,$year);
+			if($_country == 0) $holidays['Bundesfeier'] = mktime(0,0,0,8,1,$year);
+			if($_country == 1) $holidays['Tag der deutschen Einheit'] = mktime(0,0,0,10,3,$year);
+			if($_country == 2) $holidays['&ouml;sterreichische Nationalfeiertag'] = mktime(0,0,0,10,26,$year);
+			if($_country == 3) $holidays['Staatsfeiertag in Liechtenstein'] = mktime(0,0,0,8,15,$year);
 			//Landesfeiertag - aus den Settings------------------------------------------------------
 			$holidays['Neujahr'] = mktime(0,0,0,1,1,$year);
 			$holidays['Rosenmontag'] = strtotime("-48 days", $easter);

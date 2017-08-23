@@ -8,9 +8,9 @@
 * Copyright (c), IT-Master GmbH, All rights reserved
 *******************************************************************************/
 echo "<table width='100%' hight='100%' border='0' cellpadding='2' cellspacing='0'><tr><td valign='midle'>";
-if($_settings->_array[13][1]) echo "<a title='Anwesenheits&uuml;bersicht' href='?action=anwesend'><img src='images/icons/report_user.png' border=0></a> ";
-if($_settings->_array[13][1]) echo "</td><td valign='middle'>";
-if($_settings->_array[13][1]) echo " | ";
+if($_settings->_array["Anwesenheit zeigen"]["value"]) echo "<a title='Anwesenheits&uuml;bersicht' href='?action=anwesend'><img src='images/icons/report_user.png' border=0></a> ";
+if($_settings->_array["Anwesenheit zeigen"]["value"]) echo "</td><td valign='middle'>";
+if($_settings->_array["Anwesenheit zeigen"]["value"]) echo " | ";
 echo "</td><td valign='middle'>";
 echo "<a title='Home' href='index.php'><img src='images/icons/house.png' border=0></a> ";
 echo "</td><td valign='middle'>";

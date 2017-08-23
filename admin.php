@@ -2,11 +2,11 @@
 /********************************************************************************
 * Small Time
 /*******************************************************************************
-* Version 0.9.011
+* Version 0.9.016d
 * Author:  IT-Master GmbH
 * www.it-master.ch / info@it-master.ch
 * Copyright (c), IT-Master GmbH, All rights reserved
-* letzte Änderung: 24.8.2016
+* letzte Änderung: 23.8.2017
 *******************************************************************************/
 //Session starten
 if ( !my_session_start() ) {
@@ -103,7 +103,7 @@ if($_GET['calc']){
 // Modler allgemeine Daten laden
 // ----------------------------------------------------------------------------
 $_users         	  = new xml_filehandle("./Data/","users.xml");
-$_groups            = new time_filehandle("./Data/","group.txt",";");
+$_groups            = new xml_filehandle("./Data/","group.xml");
 $_settings      	  = new time_settings();
 $_template          = new time_template("index.php");
 $_template->_user01 = "sites_admin/admin01.php";
@@ -159,8 +159,8 @@ if($_SESSION['admin'] and !$_GET['action']){
 	if($_GET['group']=="-1"){
 		$_action = "login_einzel";
 	}
-}elseif($_settings->_array[19][1]=="1"){
-	// Mehrbenutzersystem aktiviert wenn $_settings->_array[19][1])
+}elseif($_settings->_array["Mehrbenutzersystem"]['value']=="1"){
+	// Mehrbenutzersystem aktiviert wenn $_settings->_array[Mehrbenutzersystem][value])
 }
 // ----------------------------------------------------------------------------
 // Modler Userdaten laden
@@ -420,7 +420,7 @@ switch($_action){
 		$_template->_user04 = "sites_user/admin04_timetable.php";
 		break;
 	case "quick_time":
-		$_time->set_runden((int) $_settings->_array[25][1]);	
+		$_time->set_runden((int) $_settings->_array["Runden der Quicktime"]["value"]);	
 		$_time->save_quicktime($_user->_ordnerpfad);
 		$_template->_user02 = "sites_admin/admin02_user_cal.php";
 		$_template->_user04 = "sites_user/admin04_timetable.php";
@@ -568,7 +568,7 @@ switch($_action){
 		break;
 	case "feiertage";
 		$_infotext = getinfotext( "Individuelle Feiertage mit einem festen Datum","td_background_top");
-		$_feiertage = new time_feiertage($_time->_jahr, $_settings->_array[12][1], $_user->_feiertage);
+		$_feiertage = new time_feiertage($_time->_jahr, $_settings->_array["Landeseinstellung (Bundes - Feiertag)"]["value"], $_user->_feiertage);
 		if($_POST['senden']){
 			$_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Feiertage gespeichert</td></tr></table>","td_background_heute");
 			$_feiertage->save_feiertage();
@@ -627,11 +627,11 @@ if($_SESSION['admin']){
 	// ----------------------------------------------------------------------------
 	// Monatsdaten berechnen
 	// ----------------------------------------------------------------------------
-	$_monat         = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1], $_settings->_array[28][1]);
+	$_monat         = new time_month( $_settings->_array["Landeseinstellung (Bundes - Feiertag)"]["value"], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array["Pause ab X Stunden"]["value"],$_settings->_array["Automatische Pause"]["value"],$_settings->_array["Absenz Berechnung 1"]["value"], $_settings->_array["Absenz Berechnung 2"]["value"]);
 	$_monat->_modal = $_template->_modal;
 	// Falls automatische Pause eingestellt
 	// TODO : wurde anderst gelöst, entfernen
-	if($_settings->_array[21][1] > 0){
+	if($_settings->_array["Pause ab X Stunden"]["value"] > 0){
 	}
 	// ----------------------------------------------------------------------------
 	// Jahresdaten berechnen

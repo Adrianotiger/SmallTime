@@ -98,8 +98,8 @@ if($_GET['calc']){
 // ----------------------------------------------------------------------------
 // Modler allgemeine Daten laden
 // ----------------------------------------------------------------------------
-$_users		= new time_filehandle("./Data/","users.txt",";");
-$_groups	= new time_filehandle("./Data/","group.txt",";");
+$_users		= new xml_filehandle("./Data/","users.xml");
+$_groups	= new xml_filehandle("./Data/","group.xml");
 $_settings	= new time_settings();
 $_template	= new time_template("index.php");
 $_template->set_portal(1);
@@ -110,8 +110,8 @@ $_favicon = "./images/favicon.ico";
 // ----------------------------------------------------------------------------
 $id = 0;
 foreach ($_users->_array as $tmpuser) {
-	if($tmpuser[0]<>"Pfad"){
-		create_htaccess($tmpuser[0]);
+	if($tmpuser['pfad']<>"Pfad"){
+		create_htaccess($tmpuser['pfad']);
 	}
 }
 
@@ -128,7 +128,7 @@ if(!$_POST AND ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
 	$_Userpfad = $_SESSION['admin']."/";
 }
 // Login über Cookie mit Datenüberprüfung - bei Mehrbenutzerbetrieb sollte nicht über sookie eingeloggt werden
-if($_COOKIE["lname"] and $_COOKIE["lpass"] and $_settings->_array[19][1]=="0" and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
+if($_COOKIE["lname"] and $_COOKIE["lpass"] and $_settings->_array["Mehrbenutzersystem"]["value"]=="0" and ($_SESSION['admin']==NULL OR $_SESSION['admin']=="")){
 	$_logcheck->login($_POST, $_users->_array);
 }
 // Loginformular - Datenüberprüfung
@@ -156,7 +156,7 @@ if($_SESSION['admin'] and !$_GET['action']){
 	if($_GET['group']=="-1"){
 		$_action = "login_einzel";
 	}
-}elseif($_settings->_array[19][1]=="1"){
+}elseif($_settings->_array["Mehrbenutzersystem"]["value"]=="1"){
 	//Falls Mehrbenutzersystem eingestellt wurde
 	$_action = "login_mehr";
 }
@@ -172,7 +172,7 @@ if($_SESSION['admin']){
 // ----------------------------------------------------------------------------
 // Sicherheit, darf der Mitarbeiter editieren -> alte timestamp
 // ----------------------------------------------------------------------------
-// $_settings->_array[23][1] = wie viel Tage zurück
+// $_settings->_array["Stempelzeit edit 2"]["value"] = wie viel Tage zurück
 // TODO : falls in den Settings eingestellt wurde wie lange zurück Änderungen vorgenommen werden können, timestamp vergleichen
 $edit  = true;
 // ----------------------------------------------------------------------------
@@ -273,7 +273,7 @@ switch($_action){
 		break;
 	case "add_rapport":
 		// Sicherheitscheck : Settings- 18 : Darf der User einen Rapport eintragen
-		if($_settings->_array[18][1] && $edit){
+		if($_settings->_array["Raport eintragen"]["value"]==1 && $edit){
 			$_rapport = new time_rapport();
 		}
 		$_template->_user02 = "sites_user/user02_cal.php";
@@ -282,7 +282,7 @@ switch($_action){
 		break;
 	case "insert_rapport":
 		// Sicherheitscheck : Settings- 18 : Darf der User einen Rapport eintragen
-		if($_settings->_array[18][1] && $edit){
+		if($_settings->_array["Raport eintragen"]["value"] && $edit){
 			$_rapport = new time_rapport();
 			if($_POST['absenden'] == "UPDATE" and $_write){
 				$_rapport->insert_rapport($_user->_ordnerpfad, $_time->_timestamp);
@@ -296,7 +296,7 @@ switch($_action){
 		break;
 	case "add_absenz":
 		// Sicherheitscheck : Settings- 17 : Darf der User eine Absenz eintragen
-		if($_settings->_array[17][1] && $edit){
+		if($_settings->_array["Absenzen eingeben"]["value"]==1 && $edit){
 			$_template->_user02 = "sites_user/user02_cal.php";
 			$_template->_user04 = "sites_time/absenz_add_04.php";
 			$_template->_user03 = "sites_user/user03_stat.php";
@@ -304,7 +304,7 @@ switch($_action){
 		break;
 	case "insert_absenz":
 		// Sicherheitscheck : Settings- 17 : Darf der User eine Absenz eintragen
-		if($_settings->_array[17][1] && $edit){
+		if($_settings->_array["Absenzen eingeben"]["value"]==1 && $edit){
 			if($_POST['absenden'] == "OK" and $_write){
 				$_absenz->insert_absenz($_user->_ordnerpfad, $_time->_jahr);
 			}
@@ -315,7 +315,7 @@ switch($_action){
 		break;
 	case "delete_absenz":
 		// Sicherheitscheck : Settings- 17 : Darf der User eine Absenz eintragen
-		if($_settings->_array[17][1] && $edit){			
+		if($_settings->_array["Absenzen eingeben"]["value"]==1 && $edit){			
 			$_absenz->delete_absenz($_user->_ordnerpfad, $_time->_jahr);
 			$_template->_user02 = "sites_user/user02_cal.php";
 			$_template->_user04 = "sites_user/user04_timetable.php";
@@ -324,7 +324,7 @@ switch($_action){
 		break;
 	case "edit_time":
 		// Sicherheitscheck : Settings- 14 : darf der Mitarbeiter alte Stempelzeiten editieren
-		if($_settings->_array[14][1] && $edit){	
+		if($_settings->_array["Stempelzeit edit 1"]["value"]==1 && $edit){	
 			$_template->_user02 = "sites_user/user02_cal.php";
 			$_template->_user04 = "sites_time/time_edit_04.php";
 			$_template->_user03 = "sites_user/user03_stat.php";
@@ -332,7 +332,7 @@ switch($_action){
 		break;
 	case "update_time":
 		// Sicherheitscheck : Settings- 14 : darf der Mitarbeiter alte Stempelzeiten editieren
-		if($_settings->_array[14][1] && $edit){	
+		if($_settings->_array["Stempelzeit edit 1"]["value"]==1 && $edit){	
 			$_oldtime = $_GET['timestamp'];
 			$_newtime = $_time->mktime($_POST['_w_stunde'],$_POST['_w_minute'],0,$_POST['_w_monat'], $_POST['_w_tag'],$_POST['_w_jahr']);
 			if($_POST['absenden'] == "UPDATE" and $_write){
@@ -349,7 +349,7 @@ switch($_action){
 		break;
 	case "insert_time_list":
 		// Sicherheitscheck : Settings- 16 : Falls der User mehrere Zeiten eintragen darf
-		if($_settings->_array[16][1] && $edit){	
+		if($_settings->_array["Anwesenheitsliste"]["value"]==1 && $edit){	
 			if($_POST['absenden'] == "OK" and $_write){
 				$_timestamp		= $_GET['timestamp'];
 				$_w_tag			= $_POST['_w_tag'];
@@ -383,7 +383,7 @@ switch($_action){
 		break;
 	case "insert_time":
 		// Sicherheitscheck : Settings- 15 : Falls der User eine Zeit eintragen darf
-		if($_settings->_array[15][1] && $edit){
+		if($_settings->_array["Eine Zeit hinzufügen"]["value"]==1 && $edit){
 			if($_POST['absenden'] == "OK" and $_write){			
 				//if :falls eine Zeit fehlte / elseif : falls eine alte Zeit über Mitternacht geht
 				if($_POST['oldtime']==1){
@@ -409,7 +409,7 @@ switch($_action){
 		$_template->_user03 = "sites_user/user03_stat.php";
 		break;
 	case "quick_time":
-		$_time->set_runden((int) $_settings->_array[25][1]);	
+		$_time->set_runden((int) $_settings->_array["Runden der Quicktime"]["value"]);	
 		$_time->save_quicktime($_user->_ordnerpfad);
 		$_template->_user02 = "sites_user/user02_cal.php";
 		$_template->_user04 = "sites_user/user04_timetable.php";
@@ -418,7 +418,7 @@ switch($_action){
 		break;
 	case "add_time":
 		// Sicherheitscheck : Settings- 15 : Falls der User eine Zeit eintragen darf
-		if($_settings->_array[15][1] && $edit){
+		if($_settings->_array["Eine Zeit hinzufügen"]["value"]==1 && $edit){
 			$_template->_user02 = "sites_user/user02_cal.php";
 			$_template->_user04 = "sites_time/time_add_04.php";
 			$_template->_user03 = "sites_user/user03_stat.php";
@@ -426,7 +426,7 @@ switch($_action){
 		break;
 	case "add_time_list":
 		// Sicherheitscheck : Settings- 16 : Falls der User mehrere Zeiten eintragen darf
-		if($_settings->_array[16][1] && $edit){	
+		if($_settings->_array["Anwesenheitsliste"]["value"]==1 && $edit){	
 			$_template->_user02 = "sites_user/user02_cal.php";
 			$_template->_user04 = "sites_time/time_addlist_04.php";
 			$_template->_user03 = "sites_user/user03_stat.php";
@@ -453,13 +453,13 @@ switch($_action){
 		if($_druck){
 			//erstelle_pdf_more($_MonatsArray); // TODO: undefined function
 		}else{
-			if($_settings->_array[20][1] >= $_tag){
+			if($_settings->_array["MA dürfen Drucken"]["value"] >= $_tag){
 				$_drucktime = mktime(0,0,0,$_monat,$_tag,$_jahr);
 				$_time->set_timestamp($_drucktime);
 				$_time->set_monatsname($_settings->_array[11][1]);
 				erstelle_neu($_drucktime);
 				$_template->_user04 = "sites_user/user04_pdf_show.php";
-			}elseif($_settings->_array[20][1]==0 ){
+			}elseif($_settings->_array["MA dürfen Drucken"]["value"]==0 ){
 				erstelle_neu(0);
 				$_template->_user04 = "sites_user/user04_pdf_show.php";
 			}else{
@@ -495,7 +495,7 @@ switch($_action){
 // ----------------------------------------------------------------------------
 function setLoginForm(){
 	global $_template, $_settings;
-	if($_settings->_array[19][1]==0){
+	if($_settings->_array["Mehrbenutzersystem"]["value"]==0){
 		$_template->_user01 = "sites_time/null.php";
 		$_template->_user02 = "sites_login/login_einzel_02.php";
 		$_template->_user03 = "sites_login/login_einzel_03.php";
@@ -513,7 +513,7 @@ if($_SESSION['admin']){
 	// ----------------------------------------------------------------------------
 	// Monatsdaten berechnen
 	// ----------------------------------------------------------------------------
-	$_monat         = new time_month( $_settings->_array[12][1], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1], $_settings->_array[28][1]);
+	$_monat         = new time_month( $_settings->_array["Landeseinstellung (Bundes - Feiertag)"]["value"], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung, $_settings->_array[21][1],$_settings->_array[22][1],$_settings->_array[27][1], $_settings->_array[28][1]);
 	$_monat->_modal = $_template->_modal;
 	// ----------------------------------------------------------------------------
 	// Jahresdaten berechnen

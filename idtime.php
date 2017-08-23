@@ -35,23 +35,22 @@ Sie werden nach 2 Sekunden automatisch weitergeleitet.
 	// -----------------------------------------------------------------------------
 	// Benutzerdaten in Array ( ID => Pfad ) lesen:
 	$_stempelid = array();
-	$fp = @fopen('./Data/users.txt', 'r');
-	@fgets($fp); // erste Zeile überspringen
-	while (($logindata = fgetcsv($fp, 0, ';')) != false) {
+	include_once "./include/class_xmlhandle.php";
+    $_users = new xml_filehandle("./Data/", "users.xml");
+    foreach($_users->_array as $_user) {
 		if(isset($_GET['rfid'])) {
-			$tempid=trim(@$logindata[3]);
+			$tempid=trim(@$_user['rfid']);
 			$tempid = str_ireplace('\r','',$tempid);
 			$tempid = str_ireplace('\n','',$tempid);
 			if($tempid==@$_GET['rfid']){
-				$user = $logindata[0];
+				$user = $_user['pfad'];
 			}
 		}elseif(isset($_GET['id'])){
-			$hash = sha1($logindata[1].$logindata[2].crypt($logindata[1], '$2y$04$'.substr($idtime_secret.$logindata[2], 0, 22)));
+			$hash = sha1($_user['name'].$_user['passwort'].crypt($_user['name'], '$2y$04$'.substr($idtime_secret.$_user['passwort'], 0, 22)));
 			$ID = substr($hash, 0, 16);
-			$_stempelid[$ID] = $logindata[0];
+			$_stempelid[$ID] = $_user['pfad'];
 			}
 	}
-	fclose($fp);
 	// -----------------------------------------------------------------------------
 	// übergebene ID Benutzer zuordnen und Stempelzeit eintragen:
 	if (isset($_GET['id'])) {

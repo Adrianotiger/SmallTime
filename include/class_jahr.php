@@ -283,11 +283,11 @@ class time_jahr{
 								$this->_summe_Fv += intval($_arr[$i][1]);
 							}
 						}else{
-							$this->_summe_Fv += $_arr[$i][1];
+							$this->_summe_Fv += intval($_arr[$i][1]);
 						}
 						
 					}else{
-						$this->_summe_Fv += $_arr[$i][1];
+						$this->_summe_Fv += intval($_arr[$i][1]);
 					}
 					//Summe alle Eingtetragenen und Berechneten Ferien
 					$this->_summe_Ft += intval($_arr[$i][1]);
