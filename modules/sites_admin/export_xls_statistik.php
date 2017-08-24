@@ -37,7 +37,7 @@ foreach($_benutzer as $string){
 	$_farbe[$i][2] = "";
 	$_file 		= "./Data/".$string[0]."/Timetable/" .$_time->_jahr;
 	$_file_absenz	= "./Data/".$string[0]."/Timetable/A" . $_time->_jahr;
-	$_file_abstxt 	= "./Data/".$string[0]."/absenz.txt";
+	$_file_abstxt 	= "./include/Settings/absenz.txt";
 	$_sp = 4;
 	if(file_exists($_file_abstxt)){
 		$tmparr = file($_file_abstxt);

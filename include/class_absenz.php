@@ -15,7 +15,7 @@ class time_absenz{
 	function __construct($ordnerpfad,$jahr){	
 		$this->ordnerpfad = $ordnerpfad;
 		$_file = "./Data/".$this->ordnerpfad."/Timetable/A" . $jahr;
-		$this->_filetext = file("./Data/".$this->ordnerpfad."/absenz.txt");
+		$this->_filetext = file("./include/Settings/absenz.txt");
 		if(file_exists($_file)){
 			$this->_array = file($_file);
 			$i=0;

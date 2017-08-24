@@ -167,7 +167,7 @@ class time_user{
 	function set_user_absenzen(){
 		$i = $_POST['anzahl'];
 		$_zeilenvorschub = "\r\n";
-		$_file = "./Data/".$this->_ordnerpfad."/absenz.txt";
+		$_file = "./include/Settings/absenz.txt";
 		$fp = fopen($_file,"w+");
 		for($z=0; $z<=$i; $z++){
 			$ab0 = "ab0_".$z;
@@ -178,20 +178,9 @@ class time_user{
 		fclose($fp);
 	}
 	function get_user_absenzen(){
-		$_file = "./Data/".$this->_ordnerpfad."/absenz.txt";
-		if(file_exists($_file)){
-			$_absenzarr = file($_file);
-		}else{
-			// Falls ein neuer User erstellt wurde, wird eine neue Datei erstellt mit den vordefinierten Einträgen
-			$_absenzarr[0] = "Ferien;F;100";
-			$_absenzarr[1] = "Krankheit;K;100";
-			$_absenzarr[2] = "Unfall;U;100";
-			$_absenzarr[3] = "Militär;M;100";
-			$_absenzarr[4] = "Intern;I;100";
-			$_absenzarr[5] = "Weiterbildung;W;100";
-			$_absenzarr[6] = "Extern;E;100";
-		}
-		return $_absenzarr;
+		$_file = "./include/Settings/absenz.txt";
+		$_absenzarr = file($_file);
+    return $_absenzarr;
 	}
 	function check_htaccess(){
 		$_file = "./Data/.htaccess";

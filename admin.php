@@ -144,6 +144,9 @@ if($_GET['action']=="logout"){
 	header("Location: admin.php");
 	exit();
 }
+if(isset($_SESSION['datenpfad']) && !file_exists("./Data/".$_SESSION['datenpfad']."/")) {
+  $_SESSION['datenpfad'] = "administrator";
+}
 // ----------------------------------------------------------------------------
 // Controller für Action
 // ----------------------------------------------------------------------------
@@ -517,6 +520,7 @@ switch($_action){
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_user_editabsenzen.php";
 		break;
+    /*
 		case "user_update_absenzen":
 		if($_POST['absenden'] == "OK"){
 			$_user->set_user_absenzen();
@@ -526,6 +530,7 @@ switch($_action){
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_user_editabsenzen.php";
 		break;
+    */
 		case "user_personalkarte":
 		if($_POST['update']){
 			$_infotext = getinfotext("<img src='images/icons/error.png' border=0> Personalkarte von ". $_user->_name ." wurde aktualisiert","td_background_heute");
@@ -563,6 +568,12 @@ switch($_action){
 			$_infotext = getinfotext("<table><tr><td><img src='images/icons/error.png' border=0></td><td>Neue Settings gespeichert</td></tr></table>","td_background_heute");
 			$_settings->save_settings();
 		}
+    else if(isset($_POST['absenden']) && isset($_POST['ab1_0']))
+    {
+      $_user->set_user_absenzen();
+      $_user->load_data_session();
+      $_infotext = getinfotext( "<table><tr><td><img src='images/icons/error.png' border=0></td><td>Absenzen wurde aktualisiert</td></tr></table>","td_background_heute");
+    }
 		$_template->_user02 = "sites_admin/admin02.php";
 		$_template->_user04 = "sites_admin/admin04_settings_edit.php";
 		break;

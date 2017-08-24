@@ -12,7 +12,7 @@
  <setting id="meta:Keywords" type="text" value="php, zeiterfassung, datenbank, textbasierend, import, stempeluhr, digital" beschreibung="Suchwörter"/>
  <setting id="meta:Copyright" type="text" value="info@it-master.ch" beschreibung="Copyright by..."/>
  <setting id="Monatsanzeige" type="text" value="Jan.;Feb.;März;April;Mai;Juni;Juli;Aug.;Sept.;Okt.;Nov.;Dez." beschreibung="Anzeige im Menue"/>
- <setting id="Landeseinstellung (Bundes - Feiertag)" type="option" value="0" options="Switzerland,Germany,Austria,Lichtenstein" beschreibung="Landeseinstellung für den Bundes - Feiertag"/>
+ <setting id="Landeseinstellung (Bundes - Feiertag)" type="option" value="0" options="Switzerland,Germany,Austria,Liechtenstein" beschreibung="Landeseinstellung für den Bundes - Feiertag"/>
  <setting id="Anwesenheit zeigen" img="images/icons/report_user.png" type="option" value="1" options="Nein,Ja" beschreibung="Dürfen die User die Anwesenheit der andern sehen"/>
  <setting id="Stempelzeit edit 1" img="images/icons/clock_edit.png" type="option" value="1" options="Nein,Ja" beschreibung="Dürfen die User die Stempelzeiten nachträglich verändern (ja, nein)"/>
  <setting id="Eine Zeit hinzufügen" img="images/icons/time_add.png" type="option" value="1" options="Nein,Ja" beschreibung="User dürfen eine Zeit hinzufügen"/>

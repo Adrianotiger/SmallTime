@@ -18,7 +18,7 @@ function erstelle_neu($_drucktime)
 	global $_absenz;
 	global $_month;
   
-  $zeitformat = ($_settings->_array["Zeit Darstellung"]["value"] == 1);
+  $zeitformat = ($_settings->_array["Zeit Darstellung"]["value"] == 0);
   
 	//Daten für die Anzeige
 	$_sum = array();
@@ -31,12 +31,12 @@ function erstelle_neu($_drucktime)
 			$tmp_jahr  = $tmp_jahr - 1;
 		}
 		// Falls der Mitarbeiter Drucken darf ist das nur der letzte Monat
-		$_monat = new time_month( $_settings->_array["Landeseinstellung (Bundes - Feiertag)"]["value"], $_time->_letzterTag, $_user->_ordnerpfad, $tmp_jahr, $tmp_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1]);
+		$_monat = new time_month( $_settings->_array["Landeseinstellung (Bundes - Feiertag)"]["value"], $_time->_letzterTag, $_user->_ordnerpfad, $tmp_jahr, $tmp_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array["Pause ab X Stunden"]["value"],$_settings->_array["Automatische Pause"]["value"], $_settings->_array["Absenz Berechnung 1"]["value"], $_settings->_array["bsenz Berechnung 2"]["value"]);
 		$_jahr  = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell, $_drucktime);
 	}
 	else
 	{
-		$_monat = new time_month( $_settings->_array["Landeseinstellung (Bundes - Feiertag)"]["value"], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array[21][1],$_settings->_array[22][1], $_settings->_array[27][1], $_settings->_array[28][1]);
+		$_monat = new time_month( $_settings->_array["Landeseinstellung (Bundes - Feiertag)"]["value"], $_time->_letzterTag, $_user->_ordnerpfad, $_time->_jahr, $_time->_monat, $_user->_arbeitstage, $_user->_feiertage, $_user->_SollZeitProTag, $_user->_BeginnDerZeitrechnung,$_settings->_array["Pause ab X Stunden"]["value"],$_settings->_array["Automatische Pause"]["value"], $_settings->_array["Absenz Berechnung 1"]["value"], $_settings->_array["bsenz Berechnung 2"]["value"]);
 		$_jahr  = new time_jahr($_user->_ordnerpfad, 0, $_user->_BeginnDerZeitrechnung, $_user->_Stunden_uebertrag, $_user->_Ferienguthaben_uebertrag, $_user->_Ferien_pro_Jahr, $_user->_Vorholzeit_pro_Jahr, $_user->_modell,$_time->_timestamp);
 	}
 
@@ -259,7 +259,7 @@ function erstelle_neu($_drucktime)
       else
         $pdf->Cell(13,5,$zeile[20],1,'','C','1');
 			$pdf->Cell(14,5,$zeile[14],1,'','L','1');
-			$_txt = iconv("UTF-8", "ISO-8859-1", $zeile[34]);
+			$_txt = iconv("UTF-8", "ISO-8859-1", $zeile[34] . $zeile[15]);
 			$zeile[6] = iconv("UTF-8", "ISO-8859-1", $zeile[6]);
 			$zeile[16] = iconv("UTF-8", "ISO-8859-1", $zeile[16]);
 			$pdf->MultiCell(48,5,$zeile[6].$zeile[16].$_txt,1,'','L','1');
@@ -276,9 +276,9 @@ function erstelle_neu($_drucktime)
 	$pdf->Cell(11,5,'',0,'','C');
 	$pdf->Cell(18,5,"",1,'','C', '1');
 	$pdf->Cell(72,5,"Sollstunden :" . dec2timeSett($_monat->_SummeSollProMonat, $zeitformat) . " Std.",1,'','L', '1');
-	$pdf->Cell(13,5,$_monat->_SummeWorkProMonat,1,'','C', '1');
-	$pdf->Cell(13,5,$_monat->_SummeSaldoProMonat,1,'','C', '1');
-	$pdf->Cell(14,5,$_monat->_SummeAbsenzProMonat,1,'','C', '1');
+	$pdf->Cell(13,5,dec2timeSett($_monat->_SummeWorkProMonat, $zeitformat),1,'','C', '1');
+	$pdf->Cell(13,5,dec2timeSett($_monat->_SummeSaldoProMonat, $zeitformat),1,'','C', '1');
+	$pdf->Cell(14,5,dec2timeSett($_monat->_SummeAbsenzProMonat, $zeitformat),1,'','C', '1');
 	$pdf->Cell(48,5,"",1,'','C', '1');
 	$pdf->SetFillColor(255, 255, 255);
 	$pdf->Ln();

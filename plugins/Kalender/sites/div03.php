@@ -30,7 +30,7 @@ foreach($_users->_array as $_user) {
 	$_userdaten_tmp = file("./Data/".$_user['pfad']."/userdaten.txt");
 	echo '
 	<tr>
-		<td width="20" height="22" class="td_background_info">'.$_user.'</td>
+		<td width="20" height="22" class="td_background_info">'.$_user['id'].'</td>
 		<td valign="middle" align="left" class="td_background_tag">'.$_userdaten_tmp[0].'</td>
 		<td valign="middle" align="left" class="td_background_tag">'.$time.'</td>
 	</tr>'; 

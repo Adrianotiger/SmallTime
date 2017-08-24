@@ -204,7 +204,7 @@ if($multilogin->admin->ShowUserPic=="true"){
 			<td class="td_background_tag" align="center"><input type="checkbox" name="04" value="1"<?php echo $_S4 ;?>></td>
 		</tr>
 		<tr>
-			<td class="td_background_tag">Bid des Users anzeigen</td>
+			<td class="td_background_tag">Bild des Users anzeigen</td>
 			<td class="td_background_tag" align="center"><input type="checkbox" name="05" value="1"<?php echo $_S5 ;?>></td>
 		</tr>
 	</table>	
@@ -230,7 +230,7 @@ if($multilogin->admin->ShowUserPic=="true"){
 			<td class="td_background_tag" align="center"><input type="checkbox" name="14" value="1"<?php echo $_S14 ;?>></td>
 		</tr>
 		<tr>
-			<td class="td_background_tag">Bid des Users anzeigen</td>
+			<td class="td_background_tag">Bild des Users anzeigen</td>
 			<td class="td_background_tag" align="center"><input type="checkbox" name="15" value="1"<?php echo $_S15 ;?>></td>
 		</tr>
 	</table>	
@@ -256,7 +256,7 @@ if($multilogin->admin->ShowUserPic=="true"){
 			<td class="td_background_tag" align="center"><input type="checkbox" name="24" value="1"<?php echo $_S24 ;?>></td>
 		</tr>
 		<tr>
-			<td class="td_background_tag">Bid des Users anzeigen</td>
+			<td class="td_background_tag">Bild des Users anzeigen</td>
 			<td class="td_background_tag" align="center"><input type="checkbox" name="25" value="1"<?php echo $_S25 ;?>></td>
 		</tr>
 	</table>	

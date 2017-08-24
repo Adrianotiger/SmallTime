@@ -196,26 +196,55 @@ class time{
 		fclose($open);
 	}
 	function save_timestamp($_timestamp, $_ordnerpfad){
+	  $timeadded1 = true;
+    $timeadded2 = true;
+	  $jahr = date("Y", $_timestamp);
+    $monat = date("n", $_timestamp);
+    $_times = new xml_filehandle("./Data/".$_ordnerpfad."/Timetable/", $jahr . "." . $monat . ".xml");
+    if($_times->_array == NULL)
+    {
+      $_times->_root = "times";
+      $_times->_entryname = "time";
+      $_times->_entryid = 1;
+      $_times->_biggestid = 0;
+      $_times->_array = array();
+    }
+    if(array_search($_timestamp, array_column($_times->_array, 's')) === false)
+    {
+      $time = array();
+      $time['s'] = $_timestamp;
+      $time['p'] = 0;
+      
+      echo "Add '$_timestamp' to " . $_times->_array . "<br>";
+      print_r($oldvalues);
+      
+      array_push($_times->_array, $time);
+      $_times->save_xml();
+    }
+    else
+    {
+      $timeadded1 = false; 
+    }
+    // TODO: remove txt file and leave xml
 		$_zeilenvorschub = "\r\n";
-		$jahr = date("Y", $_timestamp);
-		$monat = date("n", $_timestamp);
 		$_file = "./Data/".$_ordnerpfad."/Timetable/" . $jahr . "." . $monat;
-    
     if(file_exists($_file))
     {      
       $alltimes = file($_file);
       $timepos = array_search($_timestamp, $alltimes);
-      echo "Time pos: $timepos/" . count($alltimes) . "<br>";
       if($timepos!==false && $timepos < count($alltimes))
       {
-        return false;
+        $timeadded2 = false;
       }
     }
-		$fp = fopen($_file,"a+");
-		fputs($fp, $_timestamp);
-		fputs($fp, $_zeilenvorschub);
-		fclose($fp);
-    return true;		        
+    if($timeadded2)
+    {
+  		$fp = fopen($_file,"a+");
+  		fputs($fp, $_timestamp);
+  		fputs($fp, $_zeilenvorschub);
+  		fclose($fp);
+    }
+    return $timeadded1 & $timeadded2;		        
 	}
 	function checktime($_stunde,$_minute,$_monat,$_tag,$_jahr){
 		if($_stunde == '24' && $_minute == '00'){

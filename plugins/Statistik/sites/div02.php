@@ -98,7 +98,7 @@ foreach($_users->_array as $_user)
 	$_file        		= "./Data/" .$_user['pfad'] . "/Timetable/" .$wahljahr;
 	
 	$_file_absenz 	= "./Data/".$_user['pfad']."/Timetable/A" . $wahljahr;
-	$_file_abstxt 		= "./Data/".$_user['pfad']."/absenz.txt";
+	$_file_abstxt 		= "./include/Settings/absenz.txt";
 	$abstxt       		= array();
 	if(file_exists($_file_abstxt))
 	{
@@ -145,7 +145,7 @@ foreach($_users->_array as $_user)
 			$arrabs[$u][3] = $monat;
 			for($c = 0;$c < count($abstxt);$c++)
 			{
-				if($werte[1] == $abstxt[$c]) $_data[$uz][$monat][($c + 4)] += $werte[2];
+				if($werte[1] == $abstxt[$c]) $_data[$uz][$monat][($c + 4)] = intval($_data[$uz][$monat][($c + 4)]) + $werte[2];
 			}
 			$u++;
 		}

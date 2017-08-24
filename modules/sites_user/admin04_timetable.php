@@ -15,9 +15,9 @@ if($_settings->_array["Eine Zeit hinzufügen"]["value"]==1||$_settings->_array["A
 if($_settings->_array["Anwesenheitsliste"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1) $t++;
 $a = 1;
 if($_settings->_array["Absenzen eingeben"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1) $a++;
-if(!$_settings->_array["Raport eintragen"]["value"]==1||$_settings->_array["Admin Komplett"]["value"]==1) $a++;
+if($_settings->_array["Raport eintragen"]["value"]==0||$_settings->_array["Admin Komplett"]["value"]==0) $a++;
 $modal = "";
-$zeitformat = ($_settings->_array["Zeit Darstellung"]["value"] == 1);
+$zeitformat = ($_settings->_array["Zeit Darstellung"]["value"] == 0);
 if(strstr($_template->_modal,'true')) $modal = "&modal";
 ?>
 <table width=100% border=0 cellpadding=3 cellspacing=1>
@@ -27,7 +27,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                 <td class=td_background_top width="40" align="center">Std.</td>
                 <td class=td_background_top width="40" align="center">Saldo</td>
                 <td COLSPAN="<?php echo $a; ?>" class="td_background_top" width="50" align="center">Absenzen</td>
-                <?php if($_settings->_array["Raport eintragen"]["value"]) echo "<td class=td_background_top width=16 align=center>Do</td>"; ?>
+                <?php if($_settings->_array["Raport eintragen"]["value"]==1) echo "<td class=td_background_top width=16 align=center>Do</td>"; ?>
         </tr>
         <?php
         for($z=1; $z< count($_monat->_MonatsArray); $z++){
@@ -137,7 +137,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                         echo " Std.";
                         echo " (Total: " . $_monat->_SummeSollProMonat . " Std.)";
                         ?></td>
-                <td class=td_background_top width=40 align=center><?php if($_monat->_SummeWorkProMonat>0) echo $_monat->_SummeWorkProMonat ?></td>
+                <td class=td_background_top width=40 align=center><?php if($_monat->_SummeWorkProMonat>0) echo dec2timeSett($_monat->_SummeWorkProMonat, $zeitformat) ?></td>
                 <td class=td_background_top width=40 align=center><?php
                         if($_monat->_SummeSaldoProMonat>0){
                                 echo dec2timeSett($_monat->_SummeSaldoProMonat, $zeitformat);
@@ -146,7 +146,7 @@ if(strstr($_template->_modal,'true')) $modal = "&modal";
                         }
                         ?>
                 </td>
-                <td COLSPAN=<?php echo $a; ?> class=td_background_top width=50 align=center><?php echo $_monat->_SummeAbsenzProMonat?></td>
+                <td COLSPAN=<?php echo $a; ?> class=td_background_top width=50 align=center><?php echo dec2timeSett($_monat->_SummeAbsenzProMonat, $zeitformat) ?></td>
                 <?php
                 if($_settings->_array["Raport eintragen"]["value"]==1) echo "<td class=td_background_top width=16 align=center> </td>";
                 ?>

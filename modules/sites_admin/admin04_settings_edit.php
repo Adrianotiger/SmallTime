@@ -15,6 +15,10 @@ $s02    	= '';
 $s021   	= '';
 $s03    	= '';
 $s031   	= '';
+$s04      = '';
+$s041     = '';
+$s05      = '';
+$s051     = '';
 if(isset($_GET['menue']))
 {
 	if($_GET['menue'] == "multilogin")
@@ -38,6 +42,13 @@ if(isset($_GET['menue']))
 		$s04 = $active;
 		$s041= $fade;
 	}
+  elseif($_GET['menue'] == "absenzen")
+  {
+    $s01 = '';
+    $s011= '';;
+    $s05 = $active;
+    $s051= $fade;
+  }
 }
 ?>
 <div id="kn">
@@ -52,6 +63,11 @@ if(isset($_GET['menue']))
 				<img src="./images/icons/cog_go.png" alt="" /> Pausen
 			</a>
 		</li>
+		<li<?php echo $s05; ?>>
+      <a data-toggle="tab" href="#s5">
+        <img src="./images/icons/cog_go.png" alt="" /> Absenzen
+      </a>
+    </li>
 		<li<?php echo $s02; ?>>
 			<a data-toggle="tab" href="#s2">
 				<img src="./images/icons/cog_go.png" alt="" /> Multilogin
@@ -93,5 +109,12 @@ if(isset($_GET['menue']))
 				?>
 			</p>
 		</div>
+		<div id="s5" class="tab-pane fade<?php echo $s051; ?>">
+      <p id="content">
+        <?php
+        include('./modules/sites_admin/settings/absenzen.php');
+        ?>
+      </p>
+    </div>
 	</div>
 </div>

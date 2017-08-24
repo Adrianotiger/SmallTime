@@ -120,7 +120,7 @@ $_timelistMitarbeiter = array();
 if(file_exists($_file))
 {
   $_timelistMitarbeiter = array();
-  $_show = 1;
+  $_show = 0;
   {
     $table = "";
     $table .= "<table bgcolor=white border=0 width=100% cellpadding=3 cellspacing=1>";
@@ -207,13 +207,18 @@ if($_POST['importieren'])
     if(array_key_exists($_mitarbeiterID, $users))
     {
       echo "Mitarbeiter : " . $_mitarbeiterID . " (" . $users[$_mitarbeiterID]['username'] . ") wird importiert...<br>";
+      $tot = 0;
+      $neu = 0;
+      $alt = 0;
       foreach($_timelistMitarbeiter[$_mitarbeiterID] as $time)
       {
-        if(!$_time->save_timestamp($time, $users[$_mitarbeiterID]['pfad']))
-        {
-          echo "TIME ALREADY EXISTS!<br>";
-        }
+        $tot++;
+        if($_time->save_timestamp($time, $users[$_mitarbeiterID]['pfad']))
+          $neu++;
+        else
+          $alt++;
       }
+      echo "<ul style='width:200px;text-align:left;'><li>Total: $tot<li>Hinzugefügt: $neu<li>Bereits vorhanden: $alt</ul>";
     }
     else
     {

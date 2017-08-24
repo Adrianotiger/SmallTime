@@ -161,8 +161,6 @@ class xml_filehandle{
       $this->timetable_txt($file, 0, '0');
       mkdir ("./Data/". $_a. "/img");
       $this->htaccess_img($file);
-      $file = "./Data/". $_a. "/absenz.txt";
-      $this->absenz_txt($file);
       $file = "./Data/". $_a. "/userdaten.txt";
       $this->userdaten_txt($file);
     }
@@ -218,25 +216,6 @@ class xml_filehandle{
     fputs($fp, $_zeilenvorschub);
     fclose($fp);
   }
-  function absenz_txt($_file){
-    $_zeilenvorschub = "\r\n";
-    $fp = fopen($_file,"w+");
-    $text = 'Ferien;F;100';
-    fputs($fp, $text.$_zeilenvorschub);
-    $text = 'Krankheit;K;100' ;
-    fputs($fp, $text.$_zeilenvorschub);
-    $text = 'Unfall;U;100';
-    fputs($fp, $text.$_zeilenvorschub);
-    $text = 'Militär;M;100';
-    fputs($fp, $text.$_zeilenvorschub);
-    $text = 'Intern;I;100';
-    fputs($fp, $text.$_zeilenvorschub);
-    $text = 'Weiterbildung;W;50';
-    fputs($fp, $text.$_zeilenvorschub);
-    $text = 'Extern;E;50';
-    fputs($fp, $text.$_zeilenvorschub);
-    fclose($fp);
-  }
   function userdaten_txt($_file){
     $_zeilenvorschub = "\r\n";
     $fp = fopen($_file,"w+");
@@ -275,6 +254,7 @@ class xml_filehandle{
     $pfad = $this->_array[$id]['pfad'];
     unset($this->_array[$id]);
     $this->save_xml();
+    //echo "<h1>RENAMING: './Data/". $pfad."', ID: $id<h1>";
     rename ("./Data/". $pfad, "./Data/_del_".date("Y.n.d")."_". $pfad);  
     $_txt = ""; 
     $_txt = $_txt.  "<br><br>User wurde etfernt und die Dateien verschoben nach ./Data/_del_".date("Y.n.d")."_". $pfad. "!";

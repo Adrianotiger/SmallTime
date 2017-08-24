@@ -69,14 +69,17 @@ foreach($_benutzer->_array as $udata){
 		if($_action == 'user_edit' && $udata['id'] ==$_SESSION['id']) echo ' active'; 
 		echo "'>
                	<a title='Userdaten einstellen' href='?action=user_edit&admin_id=".$udata['id']."'><img src='images/icons/user_edit.png' border=0></a>
-               </span>
-               <span class='btn";
+               </span>";
+          
+    /*
+    echo "     <span class='btn";
 		if($_action == 'user_edit_absenzen' && $udata['id'] ==$_SESSION['id']) echo ' active'; 
 		echo "'>
                	<a title='Absenzen einstellen' href='?action=user_edit_absenzen&admin_id=".$udata['id']."'><img src='images/icons/date_edit.png' border=0></a>
-               </span>            
-               	".$tmpstr."
-	</div>
+               </span>"
+               	*/
+  echo $tmpstr;
+  echo "</div>
 	</td></tr>";
 	$i++;
 }
